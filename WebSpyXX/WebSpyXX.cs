@@ -16,11 +16,11 @@ namespace WebSpyXX
 {
     public partial class WebSpyForm : Form
     {
-        bool isAppExit;
+        //bool isAppExit;
         public WebSpyForm()
         {
             InitializeComponent();
-            isAppExit = false;
+            //isAppExit = false;
             //localCb.SelectedIndex = 1;
             //int ieVersion = GetBrowserVersion();
             //if (IfWindowsSupport())
@@ -56,7 +56,7 @@ namespace WebSpyXX
 
         private void Form1_FormClosed(object sender, FormClosedEventArgs e)
         {
-            isAppExit = true;
+            //isAppExit = true;
             //if (extandedWebBrowser1.IsBusy)
             //{
             //    extandedWebBrowser1.Stop();
