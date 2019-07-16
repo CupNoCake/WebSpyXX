@@ -59,10 +59,10 @@
             // 
             this.panel6.Controls.Add(this.urlTextBox);
             this.panel6.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel6.Location = new System.Drawing.Point(107, 0);
+            this.panel6.Location = new System.Drawing.Point(120, 0);
             this.panel6.Name = "panel6";
             this.panel6.Padding = new System.Windows.Forms.Padding(0, 5, 0, 0);
-            this.panel6.Size = new System.Drawing.Size(435, 32);
+            this.panel6.Size = new System.Drawing.Size(422, 32);
             this.panel6.TabIndex = 3;
             // 
             // urlTextBox
@@ -72,10 +72,10 @@
             this.urlTextBox.Dock = System.Windows.Forms.DockStyle.Fill;
             this.urlTextBox.Location = new System.Drawing.Point(0, 5);
             this.urlTextBox.Name = "urlTextBox";
-            this.urlTextBox.Size = new System.Drawing.Size(435, 21);
+            this.urlTextBox.Size = new System.Drawing.Size(422, 21);
             this.urlTextBox.TabIndex = 0;
-            this.urlTextBox.Enter += new System.EventHandler(this.urlTextBox_Enter);
-            this.urlTextBox.KeyDown += new System.Windows.Forms.KeyEventHandler(this.urlTextBox_KeyDown);
+            this.urlTextBox.Enter += new System.EventHandler(this.UrlTextBox_Enter);
+            this.urlTextBox.KeyDown += new System.Windows.Forms.KeyEventHandler(this.UrlTextBox_KeyDown);
             // 
             // panel5
             // 
@@ -93,18 +93,18 @@
             this.panel4.Dock = System.Windows.Forms.DockStyle.Left;
             this.panel4.Location = new System.Drawing.Point(0, 0);
             this.panel4.Name = "panel4";
-            this.panel4.Size = new System.Drawing.Size(107, 32);
+            this.panel4.Size = new System.Drawing.Size(120, 32);
             this.panel4.TabIndex = 1;
             // 
             // refreshBtn
             // 
             this.refreshBtn.Location = new System.Drawing.Point(71, 3);
             this.refreshBtn.Name = "refreshBtn";
-            this.refreshBtn.Size = new System.Drawing.Size(28, 23);
+            this.refreshBtn.Size = new System.Drawing.Size(39, 23);
             this.refreshBtn.TabIndex = 2;
             this.refreshBtn.Text = "刷新";
             this.refreshBtn.UseVisualStyleBackColor = true;
-            this.refreshBtn.Click += new System.EventHandler(this.refreshBtn_Click);
+            this.refreshBtn.Click += new System.EventHandler(this.RefreshBtn_Click);
             // 
             // backBtn
             // 
@@ -114,7 +114,7 @@
             this.backBtn.TabIndex = 1;
             this.backBtn.Text = "←";
             this.backBtn.UseVisualStyleBackColor = true;
-            this.backBtn.Click += new System.EventHandler(this.backBtn_Click);
+            this.backBtn.Click += new System.EventHandler(this.BackBtn_Click);
             // 
             // forwardBtn
             // 
@@ -124,7 +124,7 @@
             this.forwardBtn.TabIndex = 0;
             this.forwardBtn.Text = "→";
             this.forwardBtn.UseVisualStyleBackColor = true;
-            this.forwardBtn.Click += new System.EventHandler(this.forwardBtn_Click);
+            this.forwardBtn.Click += new System.EventHandler(this.ForwardBtn_Click);
             // 
             // panel3
             // 
@@ -144,11 +144,15 @@
             this.extandedWebBrowser1.ScriptErrorsSuppressed = true;
             this.extandedWebBrowser1.Size = new System.Drawing.Size(693, 404);
             this.extandedWebBrowser1.TabIndex = 2;
-            this.extandedWebBrowser1.StartNavigate += new System.EventHandler<ExtandedUserControl.BrowserExtendedNavigatingEventArgs>(this.extandedWebBrowser1_StartNavigate);
-            this.extandedWebBrowser1.StartNewWindow += new System.EventHandler<ExtandedUserControl.BrowserExtendedNavigatingEventArgs>(this.extandedWebBrowser1_StartNewWindow);
-            this.extandedWebBrowser1.StatusTextChange += new System.EventHandler<ExtandedUserControl.StatusTextEventArgs>(this.extandedWebBrowser1_StatusTextChange);
-            this.extandedWebBrowser1.Quit += new System.EventHandler(this.extandedWebBrowser1_Quit);
-            this.extandedWebBrowser1.Navigated += new System.Windows.Forms.WebBrowserNavigatedEventHandler(this.extandedWebBrowser1_Navigated);
+            this.extandedWebBrowser1.StartNavigate += new System.EventHandler<ExtandedUserControl.BrowserExtendedNavigatingEventArgs>(this.ExtandedWebBrowser1_StartNavigate);
+            this.extandedWebBrowser1.StartNewWindow += new System.EventHandler<ExtandedUserControl.BrowserExtendedNavigatingEventArgs>(this.ExtandedWebBrowser1_StartNewWindow);
+            this.extandedWebBrowser1.StatusTextChange += new System.EventHandler<ExtandedUserControl.StatusTextEventArgs>(this.ExtandedWebBrowser1_StatusTextChange);
+            this.extandedWebBrowser1.TitleChange += new System.EventHandler<ExtandedUserControl.TitleEventArgs>(this.ExtandedWebBrowser1_TitleChange);
+            this.extandedWebBrowser1.Quit += new System.EventHandler(this.ExtandedWebBrowser1_Quit);
+            this.extandedWebBrowser1.DocMouseMove += new System.EventHandler<System.Windows.Forms.HtmlElementEventArgs>(this.ExtandedWebBrowser1_DocMouseMove);
+            this.extandedWebBrowser1.DocMouseDown += new System.EventHandler<System.Windows.Forms.HtmlElementEventArgs>(this.ExtandedWebBrowser1_DocMouseDown);
+            this.extandedWebBrowser1.DocumentCompleted += new System.Windows.Forms.WebBrowserDocumentCompletedEventHandler(this.ExtandedWebBrowser1_DocumentCompleted);
+            this.extandedWebBrowser1.Navigated += new System.Windows.Forms.WebBrowserNavigatedEventHandler(this.ExtandedWebBrowser1_Navigated);
             // 
             // WebPage
             // 

@@ -16,70 +16,24 @@ namespace WebSpyXX
 {
     public partial class WebSpyForm : Form
     {
-        //bool isAppExit;
         public WebSpyForm()
         {
             InitializeComponent();
-            //isAppExit = false;
-            //localCb.SelectedIndex = 1;
-            //int ieVersion = GetBrowserVersion();
-            //if (IfWindowsSupport())
-            //{
-            //    SetWebBrowserFeatures(ieVersion < 11 ? ieVersion : 11);
-            //}
-            //else
-            //{
-            //    如果不支持IE8 则修改为当前系统的IE版本
-            //SetWebBrowserFeatures(ieVersion < 7 ? 7 : ieVersion);
-            //}
+            
+            int ieVersion = GetBrowserVersion();
+            if (IfWindowsSupport())
+            {
+                SetWebBrowserFeatures(ieVersion < 11 ? ieVersion : 11);
+            }
+            else
+            {
+                // 如果不支持IE8 则修改为当前系统的IE版本
+                SetWebBrowserFeatures(ieVersion < 7 ? 7 : ieVersion);
+            }
+
+            NewPage(null);
         }
 
-        
-
-        private void startBtn_Click(object sender, EventArgs e)
-        {
-            //LoadScript("function sayHello() { alert('hello') }");
-            //ExcuteScript("sayHello");
-            //Navigate(@"https://etax.fujian.chinatax.gov.cn");
-            //Thread.Sleep(3000);
-            //webBrowser1.Document.GetElementById("kw").SetAttribute("value", "云账房");
-            //webBrowser1.Document.GetElementById("su").InvokeMember("click");
-            //object retObj = webBrowser1.Document.InvokeScript("var text = document.getElementById(\"kw\").value;return text;");
-            //retObj.ToString();
-            //string text = ((IJavaScriptExecutor)selenium).ExecuteScript("var input = document.getElementById(\"kw\").value;return input").ToString();
-        }
-
-        private void Form1_Load(object sender, EventArgs e)
-        {
-
-        }
-
-        private void Form1_FormClosed(object sender, FormClosedEventArgs e)
-        {
-            //isAppExit = true;
-            //if (extandedWebBrowser1.IsBusy)
-            //{
-            //    extandedWebBrowser1.Stop();
-            //}
-
-        }
-
-        //private void btnCapture_Click(object sender, EventArgs e)
-        //{
-
-        //}
-        //private void browseBtn_Click(object sender, EventArgs e)
-        //{
-        //    //string fileName = string.Empty; //文件名
-        //    //打开文件
-        //    OpenFileDialog dlg = new OpenFileDialog();
-        //    dlg.DefaultExt = "js";
-        //    dlg.Filter = "JavaScript Files|*.js|All Files|*.*";
-        //    if (dlg.ShowDialog() == DialogResult.OK)
-        //        jsText.Text = dlg.FileName;
-        //    //if (fileName == null)
-        //    //return;
-        //}
         #region 浏览器设置
 
         /// <summary>  
@@ -176,14 +130,111 @@ namespace WebSpyXX
 
         #endregion
 
+        private void NewPage(string url)
+        {
+            WebPage webPage = new WebPage();
+            webPage.Dock = DockStyle.Fill;
+            webPage.Name = "webPage";
+            webPage.NewWindow += WebPage_NewWindow;
+            webPage.StatusTextChange += WebPage_StatusTextChange;
+            webPage.DocumentTitleChange += WebPage_DocumentTitleChange;
+            
+
+            TabPage tabPage = new TabPage("新标签页");
+            tabPage.Controls.Add(webPage);
+           
+            if (tabControl1.TabPages.Count > 0)
+            {
+                tabControl1.TabPages.Insert(tabControl1.SelectedIndex + 1, tabPage);
+            }
+            else
+            {
+                tabControl1.TabPages.Add(tabPage);
+            }
+
+            if (tabControl1.SelectedTab != tabPage)
+                tabControl1.SelectTab(tabPage);
+
+            webPage.Navigate(url);
+        }
+
+        private void ClosePage(int index)
+        {
+            if(index >= 0 && index < tabControl1.TabPages.Count)
+            {
+                if (tabControl1.TabPages.Count > 1)
+                {
+                    (tabControl1.TabPages[index].Controls[0] as WebPage).Close();
+                    tabControl1.TabPages.RemoveAt(index);
+
+                    if (index == tabControl1.TabPages.Count)
+                    {
+                        tabControl1.SelectedIndex = tabControl1.TabPages.Count - 1;
+                    }
+                    else
+                    {
+                        tabControl1.SelectedIndex = index;
+                    }
+                }
+                else
+                    Close();
+            }
+            
+        }
+
+        private void SetCapture(int index)
+        {
+            if (index >= 0 && index < tabControl1.TabPages.Count)
+            {
+                (tabControl1.TabPages[index].Controls[0] as WebPage).SetCapture();
+            }
+        }
+
+        private void Form1_Load(object sender, EventArgs e)
+        {
+
+        }
+
+        private void Form1_FormClosed(object sender, FormClosedEventArgs e)
+        {
+           
+
+        }
+
         private void WebSpyXX_FormClosing(object sender, FormClosingEventArgs e)
         {
 
         }
 
-        private void webPage1_StatusTextChange(object sender, WebStatusTextEventArgs e)
+        private void WebPage_StatusTextChange(object sender, WebStatusTextEventArgs e)
         {
             toolStripStatusLabel1.Text = e.Text;
+        }
+
+        private void WebPage_NewWindow(object sender, NewWindowEventArgs e)
+        {
+            NewPage(e.Url);
+        }
+
+        private void WebPage_DocumentTitleChange(object sender, DocumentTitleEventArgs e)
+        {
+            TabPage tabPage = (sender as Control).Parent as TabPage;
+            tabPage.Text = e.Title;
+        }
+
+        private void Tsmi_newPage_Click(object sender, EventArgs e)
+        {
+            NewPage(null);
+        }
+
+        private void Tsmi_closeCurrent_Click(object sender, EventArgs e)
+        {
+            ClosePage(tabControl1.SelectedIndex);
+        }
+
+        private void Tsmi_capture_Click(object sender, EventArgs e)
+        {
+            SetCapture(tabControl1.SelectedIndex);
         }
     }
 }

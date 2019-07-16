@@ -11,18 +11,50 @@ using mshtml;
 
 namespace WebSpyXX
 {
+
     public partial class WebPage : UserControl
     {
         bool isRun;
         bool isAppExit;
+
+        public event EventHandler<DocumentTitleEventArgs> DocumentTitleChange;
+        public event EventHandler<WebStatusTextEventArgs> StatusTextChange;
+
         public WebPage()
         {
             InitializeComponent();
+            
             isAppExit = false;
             isRun = false;
+            
         }
 
-        private void Navigate(String address)
+        #region 私有方法
+        private void UpdateAddressText()
+        {
+            if (extandedWebBrowser1.Url != null)
+                urlTextBox.Text = extandedWebBrowser1.Url.ToString();
+        }
+        private void WaitWebResult()
+        {
+            // 等待网页加载完成
+
+            do
+            {
+                Application.DoEvents();
+
+                if (isAppExit)
+                    return;
+            }
+            while (extandedWebBrowser1.ReadyState != WebBrowserReadyState.Complete && isRun);
+
+            isRun = false;
+            refreshBtn.Text = "刷新";
+        }
+        #endregion
+
+        #region method
+        public void Navigate(String address)
         {
             if (String.IsNullOrEmpty(address)) return;
             if (address.Equals("about:blank")) return;
@@ -33,7 +65,7 @@ namespace WebSpyXX
             }
             try
             {
-                if(isRun)
+                if (isRun)
                 {
                     extandedWebBrowser1.Stop();
                     isRun = false;
@@ -44,17 +76,13 @@ namespace WebSpyXX
             catch (System.UriFormatException)
             {
                 return;
-            } 
+            }
         }
-
-        private void UpdateAddressText()
+        public void Close()
         {
-            if(extandedWebBrowser1.Url != null)
-                urlTextBox.Text = extandedWebBrowser1.Url.ToString();
+            isAppExit = true;
         }
 
-
-        #region method
         public void LoadScript(string scriptText)
         {
             //找到head元素
@@ -72,27 +100,37 @@ namespace WebSpyXX
         {
             extandedWebBrowser1.Document.InvokeScript(script);
         }
+
+        public void SetCapture()
+        {
+            extandedWebBrowser1.SetCapture();
+        }
         #endregion
 
-        private void extandedWebBrowser1_StatusTextChange(object sender, ExtandedUserControl.StatusTextEventArgs e)
+        #region 窗体事件函数
+        //private void 
+
+        private void ExtandedWebBrowser1_StatusTextChange(object sender, ExtandedUserControl.StatusTextEventArgs e)
         {
             OnStatusTextChange(new WebStatusTextEventArgs(e.Text));
         }
 
-        private void extandedWebBrowser1_Navigated(object sender, WebBrowserNavigatedEventArgs e)
+
+        private void ExtandedWebBrowser1_Navigated(object sender, WebBrowserNavigatedEventArgs e)
         {
             UpdateAddressText();
-            
-            //string s = extandedWebBrowser1.DocumentTitle;
         }
 
-        private void extandedWebBrowser1_StartNewWindow(object sender, ExtandedUserControl.BrowserExtendedNavigatingEventArgs e)
+        public event EventHandler<NewWindowEventArgs> NewWindow;
+
+        private void ExtandedWebBrowser1_StartNewWindow(object sender, ExtandedUserControl.BrowserExtendedNavigatingEventArgs e)
         {
             e.Cancel = true;
-            Navigate(e.Url.ToString());
+            //Navigate(e.Url.ToString());
+            NewWindow?.Invoke(this, new NewWindowEventArgs(e.Url.ToString()));
         }
 
-        private void refreshBtn_Click(object sender, EventArgs e)
+        private void RefreshBtn_Click(object sender, EventArgs e)
         {
             if (isRun)
             {
@@ -105,7 +143,7 @@ namespace WebSpyXX
             }
         }
 
-        private void urlTextBox_KeyDown(object sender, KeyEventArgs e)
+        private void UrlTextBox_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.KeyCode == Keys.Enter)
             {
@@ -113,7 +151,7 @@ namespace WebSpyXX
             }
         }
 
-        private void urlTextBox_Enter(object sender, EventArgs e)
+        private void UrlTextBox_Enter(object sender, EventArgs e)
         {
             BeginInvoke((Action)delegate
             {
@@ -121,33 +159,25 @@ namespace WebSpyXX
             });
         }
 
-        public event EventHandler<WebStatusTextEventArgs> StatusTextChange;
-
-        protected void OnStatusTextChange(WebStatusTextEventArgs e)
-        {
-            if (e == null)
-                throw new ArgumentNullException("e");
-
-            StatusTextChange?.Invoke(this, e);
-        }
-
-        private void forwardBtn_Click(object sender, EventArgs e)
+        private void ForwardBtn_Click(object sender, EventArgs e)
         {
             extandedWebBrowser1.GoForward();
         }
 
-        private void backBtn_Click(object sender, EventArgs e)
+        private void BackBtn_Click(object sender, EventArgs e)
         {
+
+            extandedWebBrowser1.Document.InvokeScript(@"window.external.MyMessageBox('javascript访问C#代码')");
             extandedWebBrowser1.GoBack();
         }
 
-        private void extandedWebBrowser1_Quit(object sender, EventArgs e)
+        private void ExtandedWebBrowser1_Quit(object sender, EventArgs e)
         {
             isAppExit = true;
         }
 
 
-        private void extandedWebBrowser1_StartNavigate(object sender, ExtandedUserControl.BrowserExtendedNavigatingEventArgs e)
+        private void ExtandedWebBrowser1_StartNavigate(object sender, ExtandedUserControl.BrowserExtendedNavigatingEventArgs e)
         {
             if (!isRun)
             {
@@ -161,21 +191,37 @@ namespace WebSpyXX
             }
         }
 
-        private void WaitWebResult()
+        private void ExtandedWebBrowser1_TitleChange(object sender, ExtandedUserControl.TitleEventArgs e)
         {
-            // 等待网页加载完成
+            DocumentTitleChange?.Invoke(this, new DocumentTitleEventArgs(e.Title));
+        }
 
-            do
+        private void ExtandedWebBrowser1_DocumentCompleted(object sender, WebBrowserDocumentCompletedEventArgs e)
+        {
+            
+        }
+
+        #endregion
+
+        protected void OnStatusTextChange(WebStatusTextEventArgs e)
+        {
+            if (e == null)
+                throw new ArgumentNullException("e");
+
+            StatusTextChange?.Invoke(this, e);
+        }
+
+        private void ExtandedWebBrowser1_DocMouseMove(object sender, HtmlElementEventArgs e)
+        {
+            extandedWebBrowser1.ShowCaptureEle(e.ClientMousePosition);
+        }
+
+        private void ExtandedWebBrowser1_DocMouseDown(object sender, HtmlElementEventArgs e)
+        {
+            if(e.MouseButtonsPressed == MouseButtons.Left)
             {
-                Application.DoEvents();
 
-                if (isAppExit)
-                    return;
             }
-            while (extandedWebBrowser1.ReadyState != WebBrowserReadyState.Complete && isRun);
-
-            isRun = false;
-            refreshBtn.Text = "刷新";
         }
     }
 }

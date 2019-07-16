@@ -6,14 +6,74 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using mshtml;
 using System.Security.Permissions;
+using System.Drawing;
 
 namespace ExtandedUserControl
 {
     public class ExtandedWebBrowser : WebBrowser
     {
+        public ExtandedWebBrowser() : base()
+        {
+            isCapture = false;
+            hCaptureEle = null;
+            captureCssText = null;
+        }
+
+        private bool isCapture;
+        private string captureCssText;
+
+        #region 私有变量
         SHDocVw.IWebBrowser2 axIWebBrowser2;
         AxHost.ConnectionPointCookie cookie;
         WebBrowserExtendedEvents events;
+        private HtmlElement hCaptureEle;
+        #endregion
+
+        public void ShowCaptureEle(Point point)
+        {
+            if(isCapture)
+            {
+                HtmlElement hEle = Document.GetElementFromPoint(point);
+
+                if (hCaptureEle == hEle || hEle == null)
+                {
+                    return;
+                }
+
+                if (hCaptureEle != null)
+                {
+                    IHTMLElement iCaptureEle = (IHTMLElement)hCaptureEle.DomElement;
+                    iCaptureEle.style.cssText = captureCssText;
+                }
+
+                //HtmlElement hDiv = Document.CreateElement("DIV");
+                
+              
+
+                hCaptureEle = hEle;
+                IHTMLElement iht = (IHTMLElement)hEle.DomElement;
+                captureCssText = iht.style.cssText;
+                //iht.style.border = "1px solid red";
+                iht.style.cssText = "background: rgba(135, 206, 250, 0.5)";
+
+            }
+        }
+
+        public void SetCapture()
+        {
+            if(isCapture)
+            {
+                if (hCaptureEle != null)
+                {
+                    IHTMLElement iCaptureEle = (IHTMLElement)hCaptureEle.DomElement;
+                    iCaptureEle.style.cssText = captureCssText;
+                    //iCaptureEle.style.border = "";
+                    hCaptureEle = null;
+                }
+            }
+
+            isCapture = !isCapture;
+        }
 
         #region override method
         /// <summary>
@@ -63,6 +123,8 @@ namespace ExtandedUserControl
                 cookie.Disconnect();
                 cookie = null;
             }
+
+            base.DetachSink();
         }
 
         /// <summary>
@@ -72,9 +134,13 @@ namespace ExtandedUserControl
         [PermissionSet(SecurityAction.LinkDemand, Name = "FullTrust")]
         protected override void WndProc(ref Message m)
         {
-            if (m.Msg == (int)WindowsMessages.WM_DESTROY)
+            switch(m.Msg)
             {
-                OnQuit();
+                case (int)WindowsMessages.WM_DESTROY:
+                    OnQuit();
+                    break;
+                default:
+                    break;
             }
 
             base.WndProc(ref m);
@@ -113,12 +179,20 @@ namespace ExtandedUserControl
         public event EventHandler<StatusTextEventArgs> StatusTextChange;
 
         /// <summary>
+        /// Raised when Title is to be changed.
+        /// </summary>
+        public event EventHandler<TitleEventArgs> TitleChange;
+
+        /// <summary>
         /// Raised when the browser application quits
         /// </summary>
         /// <remarks>
         /// Do not confuse this with DWebBrowserEvents2.Quit... That's something else.
         /// </remarks>
         public event EventHandler Quit;
+
+        public event EventHandler<HtmlElementEventArgs> DocMouseMove;
+        public event EventHandler<HtmlElementEventArgs> DocMouseDown;
 
         #endregion
 
@@ -190,6 +264,20 @@ namespace ExtandedUserControl
         }
 
         /// <summary>
+        /// Raises the <see cref="TitleChange"/> event
+        /// </summary>
+        /// <param name="e"></param>
+        /// <exception cref="ArgumentNullException">Thrown when TitleEventArgs is null</exception>
+        protected void OnTitleChange(TitleEventArgs e)
+        {
+            if (e == null)
+                throw new ArgumentNullException("e");
+
+            TitleChange?.Invoke(this, e);
+
+        }
+
+        /// <summary>
         /// Raises the <see cref="Quit"/> event
         /// </summary>
         protected void OnQuit()
@@ -197,9 +285,29 @@ namespace ExtandedUserControl
             Quit?.Invoke(this, EventArgs.Empty);
         }
 
+        protected void OnDocumentComplete()
+        {
+            Document.MouseMove += Document_MouseMove;
+            Document.MouseDown += Document_MouseDown;
+        }
 
+       
 
         #endregion
+
+        private void Document_MouseMove(object sender, HtmlElementEventArgs e)
+        {
+            if (e == null)
+                throw new ArgumentNullException("e");
+            DocMouseMove?.Invoke(sender, e);
+        }
+
+        private void Document_MouseDown(object sender, HtmlElementEventArgs e)
+        {
+            if (e == null)
+                throw new ArgumentNullException("e");
+            DocMouseDown?.Invoke(sender, e);
+        }
 
         #region 属性
         /// <summary>
@@ -250,7 +358,7 @@ namespace ExtandedUserControl
 
             public void TitleChange(string Text)
             {
-                //throw new NotImplementedException();
+                _Browser.OnTitleChange(new TitleEventArgs(Text));
             }
 
             public void PropertyChange(string szProperty)
@@ -288,6 +396,7 @@ namespace ExtandedUserControl
 
             public void DocumentComplete(object pDisp, ref object URL)
             {
+                _Browser.OnDocumentComplete();
                 //throw new NotImplementedException();
             }
 
