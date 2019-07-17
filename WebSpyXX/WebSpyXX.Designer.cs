@@ -29,7 +29,6 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(WebSpyForm));
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
@@ -38,19 +37,14 @@
             this.工具ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.加载脚本文件ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.配置ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStrip1 = new System.Windows.Forms.ToolStrip();
-            this.toolStripLabel1 = new System.Windows.Forms.ToolStripLabel();
-            this.toolStripComboBox1 = new System.Windows.Forms.ToolStripComboBox();
-            this.toolStripButton1 = new System.Windows.Forms.ToolStripButton();
-            this.tabControl1 = new System.Windows.Forms.TabControl();
+            this.tsmi_capture = new System.Windows.Forms.ToolStripMenuItem();
             this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.tsmi_newPage = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmi_closeCurrent = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmi_closeOther = new System.Windows.Forms.ToolStripMenuItem();
-            this.tsmi_capture = new System.Windows.Forms.ToolStripMenuItem();
+            this.tabControl1 = new System.Windows.Forms.TabControl();
             this.statusStrip1.SuspendLayout();
             this.menuStrip1.SuspendLayout();
-            this.toolStrip1.SuspendLayout();
             this.contextMenuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -119,48 +113,13 @@
             this.配置ToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.配置ToolStripMenuItem.Text = "配置";
             // 
-            // toolStrip1
+            // tsmi_capture
             // 
-            this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.toolStripLabel1,
-            this.toolStripComboBox1,
-            this.toolStripButton1});
-            this.toolStrip1.Location = new System.Drawing.Point(0, 25);
-            this.toolStrip1.Name = "toolStrip1";
-            this.toolStrip1.Size = new System.Drawing.Size(764, 25);
-            this.toolStrip1.TabIndex = 2;
-            this.toolStrip1.Text = "toolStrip1";
-            // 
-            // toolStripLabel1
-            // 
-            this.toolStripLabel1.Name = "toolStripLabel1";
-            this.toolStripLabel1.Size = new System.Drawing.Size(32, 22);
-            this.toolStripLabel1.Text = "功能";
-            // 
-            // toolStripComboBox1
-            // 
-            this.toolStripComboBox1.Name = "toolStripComboBox1";
-            this.toolStripComboBox1.Size = new System.Drawing.Size(121, 25);
-            // 
-            // toolStripButton1
-            // 
-            this.toolStripButton1.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
-            this.toolStripButton1.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton1.Image")));
-            this.toolStripButton1.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButton1.Name = "toolStripButton1";
-            this.toolStripButton1.Size = new System.Drawing.Size(36, 22);
-            this.toolStripButton1.Text = "执行";
-            // 
-            // tabControl1
-            // 
-            this.tabControl1.ContextMenuStrip = this.contextMenuStrip1;
-            this.tabControl1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tabControl1.Location = new System.Drawing.Point(0, 50);
-            this.tabControl1.Name = "tabControl1";
-            this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(764, 366);
-            this.tabControl1.SizeMode = System.Windows.Forms.TabSizeMode.FillToRight;
-            this.tabControl1.TabIndex = 4;
+            this.tsmi_capture.Name = "tsmi_capture";
+            this.tsmi_capture.ShortcutKeys = System.Windows.Forms.Keys.F2;
+            this.tsmi_capture.Size = new System.Drawing.Size(180, 22);
+            this.tsmi_capture.Text = "抓取";
+            this.tsmi_capture.Click += new System.EventHandler(this.Tsmi_capture_Click);
             // 
             // contextMenuStrip1
             // 
@@ -191,14 +150,16 @@
             this.tsmi_closeOther.Size = new System.Drawing.Size(160, 22);
             this.tsmi_closeOther.Text = "关闭其他页面";
             // 
-            // tsmi_capture
+            // tabControl1
             // 
-            this.tsmi_capture.CheckOnClick = true;
-            this.tsmi_capture.Name = "tsmi_capture";
-            this.tsmi_capture.ShortcutKeys = System.Windows.Forms.Keys.F2;
-            this.tsmi_capture.Size = new System.Drawing.Size(180, 22);
-            this.tsmi_capture.Text = "抓取";
-            this.tsmi_capture.Click += new System.EventHandler(this.Tsmi_capture_Click);
+            this.tabControl1.ContextMenuStrip = this.contextMenuStrip1;
+            this.tabControl1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tabControl1.Location = new System.Drawing.Point(0, 25);
+            this.tabControl1.Name = "tabControl1";
+            this.tabControl1.SelectedIndex = 0;
+            this.tabControl1.Size = new System.Drawing.Size(764, 391);
+            this.tabControl1.SizeMode = System.Windows.Forms.TabSizeMode.FillToRight;
+            this.tabControl1.TabIndex = 5;
             // 
             // WebSpyForm
             // 
@@ -206,7 +167,6 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(764, 438);
             this.Controls.Add(this.tabControl1);
-            this.Controls.Add(this.toolStrip1);
             this.Controls.Add(this.statusStrip1);
             this.Controls.Add(this.menuStrip1);
             this.MainMenuStrip = this.menuStrip1;
@@ -219,8 +179,6 @@
             this.statusStrip1.PerformLayout();
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
-            this.toolStrip1.ResumeLayout(false);
-            this.toolStrip1.PerformLayout();
             this.contextMenuStrip1.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -232,21 +190,17 @@
         private System.Windows.Forms.StatusStrip statusStrip1;
         private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel1;
         private System.Windows.Forms.MenuStrip menuStrip1;
-        private System.Windows.Forms.ToolStrip toolStrip1;
         private System.Windows.Forms.ToolStripMenuItem 文件ToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem 工具ToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem 加载脚本文件ToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem 打印ToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem 配置ToolStripMenuItem;
-        private System.Windows.Forms.ToolStripComboBox toolStripComboBox1;
-        private System.Windows.Forms.ToolStripButton toolStripButton1;
-        private System.Windows.Forms.ToolStripLabel toolStripLabel1;
-        private System.Windows.Forms.TabControl tabControl1;
         private System.Windows.Forms.ContextMenuStrip contextMenuStrip1;
         private System.Windows.Forms.ToolStripMenuItem tsmi_newPage;
         private System.Windows.Forms.ToolStripMenuItem tsmi_closeCurrent;
         private System.Windows.Forms.ToolStripMenuItem tsmi_closeOther;
         private System.Windows.Forms.ToolStripMenuItem tsmi_capture;
+        private System.Windows.Forms.TabControl tabControl1;
     }
 }
 

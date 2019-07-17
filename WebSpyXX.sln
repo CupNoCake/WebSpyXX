@@ -1,13 +1,9 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 14
-VisualStudioVersion = 14.0.25420.1
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29102.190
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebSpyXX", "WebSpyXX\WebSpyXX.csproj", "{95010D49-538D-4B95-B74F-389ACCEDF598}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChromeTools", "chromeTools\ChromeTools.csproj", "{033D5B89-7045-4345-988D-63EB51A9BBC4}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataBaseTools", "DataBaseTools\DataBaseTools.csproj", "{9913E387-28DF-43B1-B514-66BDB8761353}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExtandedWebBrowser", "ExtandWebBrowser\ExtandedWebBrowser.csproj", "{ED5A8290-5F22-4075-B429-7C5AD0A0E2B5}"
 EndProject
@@ -22,15 +18,6 @@ Global
 		{95010D49-538D-4B95-B74F-389ACCEDF598}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
 		{95010D49-538D-4B95-B74F-389ACCEDF598}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{95010D49-538D-4B95-B74F-389ACCEDF598}.Release|Any CPU.Build.0 = Release|Any CPU
-		{033D5B89-7045-4345-988D-63EB51A9BBC4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{033D5B89-7045-4345-988D-63EB51A9BBC4}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{033D5B89-7045-4345-988D-63EB51A9BBC4}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
-		{033D5B89-7045-4345-988D-63EB51A9BBC4}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{033D5B89-7045-4345-988D-63EB51A9BBC4}.Release|Any CPU.Build.0 = Release|Any CPU
-		{9913E387-28DF-43B1-B514-66BDB8761353}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{9913E387-28DF-43B1-B514-66BDB8761353}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{9913E387-28DF-43B1-B514-66BDB8761353}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{9913E387-28DF-43B1-B514-66BDB8761353}.Release|Any CPU.Build.0 = Release|Any CPU
 		{ED5A8290-5F22-4075-B429-7C5AD0A0E2B5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{ED5A8290-5F22-4075-B429-7C5AD0A0E2B5}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{ED5A8290-5F22-4075-B429-7C5AD0A0E2B5}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -38,5 +25,8 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {D35F59D8-0C15-4221-81D4-906F61BCEE22}
 	EndGlobalSection
 EndGlobal

@@ -16,6 +16,9 @@ namespace WebSpyXX
     {
         bool isRun;
         bool isAppExit;
+        private bool isCapture;
+        private string captureCssText;
+        private HtmlElement hCaptureEle;
 
         public event EventHandler<DocumentTitleEventArgs> DocumentTitleChange;
         public event EventHandler<WebStatusTextEventArgs> StatusTextChange;
@@ -26,6 +29,9 @@ namespace WebSpyXX
             
             isAppExit = false;
             isRun = false;
+            isCapture = false;
+            captureCssText = null;
+            hCaptureEle = null;
             
         }
 
@@ -103,7 +109,22 @@ namespace WebSpyXX
 
         public void SetCapture()
         {
-            extandedWebBrowser1.SetCapture();
+            if (isCapture)
+            {
+                if (hCaptureEle != null)
+                {
+                    IHTMLElement iCaptureEle = (IHTMLElement)hCaptureEle.DomElement;
+                    iCaptureEle.style.cssText = captureCssText;
+                    //iCaptureEle.style.border = "";
+                    hCaptureEle = null;
+                }
+
+                tagNameLabel.Text = "";
+                idLabel.Text = "";
+            }
+
+            isCapture = !isCapture;
+            capturePanel.Visible = !capturePanel.Visible;
         }
         #endregion
 
@@ -213,14 +234,41 @@ namespace WebSpyXX
 
         private void ExtandedWebBrowser1_DocMouseMove(object sender, HtmlElementEventArgs e)
         {
-            extandedWebBrowser1.ShowCaptureEle(e.ClientMousePosition);
+            if (isCapture)
+            {
+                HtmlElement hEle = (sender as HtmlDocument).GetElementFromPoint(e.ClientMousePosition);
+
+                if (hCaptureEle == hEle || hEle == null)
+                {
+                    return;
+                }
+
+                if (hCaptureEle != null)
+                {
+                    IHTMLElement iCaptureEle = (IHTMLElement)hCaptureEle.DomElement;
+                    iCaptureEle.style.cssText = captureCssText;
+                }
+
+
+                hCaptureEle = hEle;
+                IHTMLElement iht = (IHTMLElement)hEle.DomElement;
+                captureCssText = iht.style.cssText;
+                iht.style.cssText = "border:1px solid red";//"background: rgba(135, 206, 250, 0.5)";
+
+                tagNameLabel.Text = hCaptureEle.TagName;
+                idLabel.Text = hCaptureEle.Id;
+            }
         }
 
         private void ExtandedWebBrowser1_DocMouseDown(object sender, HtmlElementEventArgs e)
         {
             if(e.MouseButtonsPressed == MouseButtons.Left)
             {
+                if(isCapture)
+                {
+                    SetCapture();
 
+                }
             }
         }
     }

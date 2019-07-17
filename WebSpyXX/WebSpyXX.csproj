@@ -134,10 +134,6 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\DataBaseTools\DataBaseTools.csproj">
-      <Project>{9913e387-28df-43b1-b514-66bdb8761353}</Project>
-      <Name>DataBaseTools</Name>
-    </ProjectReference>
     <ProjectReference Include="..\ExtandWebBrowser\ExtandedWebBrowser.csproj">
       <Project>{ed5a8290-5f22-4075-b429-7c5ad0a0e2b5}</Project>
       <Name>ExtandedWebBrowser</Name>

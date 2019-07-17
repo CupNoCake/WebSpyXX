@@ -28,6 +28,11 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.capturePanel = new System.Windows.Forms.Panel();
+            this.idLabel = new System.Windows.Forms.Label();
+            this.label3 = new System.Windows.Forms.Label();
+            this.tagNameLabel = new System.Windows.Forms.Label();
+            this.label1 = new System.Windows.Forms.Label();
             this.panel1 = new System.Windows.Forms.Panel();
             this.panel6 = new System.Windows.Forms.Panel();
             this.urlTextBox = new System.Windows.Forms.TextBox();
@@ -38,11 +43,59 @@
             this.forwardBtn = new System.Windows.Forms.Button();
             this.panel3 = new System.Windows.Forms.Panel();
             this.extandedWebBrowser1 = new ExtandedUserControl.ExtandedWebBrowser();
+            this.capturePanel.SuspendLayout();
             this.panel1.SuspendLayout();
             this.panel6.SuspendLayout();
             this.panel4.SuspendLayout();
             this.panel3.SuspendLayout();
             this.SuspendLayout();
+            // 
+            // capturePanel
+            // 
+            this.capturePanel.Controls.Add(this.idLabel);
+            this.capturePanel.Controls.Add(this.label3);
+            this.capturePanel.Controls.Add(this.tagNameLabel);
+            this.capturePanel.Controls.Add(this.label1);
+            this.capturePanel.Dock = System.Windows.Forms.DockStyle.Top;
+            this.capturePanel.Location = new System.Drawing.Point(0, 0);
+            this.capturePanel.Name = "capturePanel";
+            this.capturePanel.Size = new System.Drawing.Size(693, 24);
+            this.capturePanel.TabIndex = 8;
+            this.capturePanel.Visible = false;
+            // 
+            // idLabel
+            // 
+            this.idLabel.AutoSize = true;
+            this.idLabel.Location = new System.Drawing.Point(173, 6);
+            this.idLabel.Name = "idLabel";
+            this.idLabel.Size = new System.Drawing.Size(0, 12);
+            this.idLabel.TabIndex = 3;
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(146, 6);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(23, 12);
+            this.label3.TabIndex = 2;
+            this.label3.Text = "id:";
+            // 
+            // tagNameLabel
+            // 
+            this.tagNameLabel.AutoSize = true;
+            this.tagNameLabel.Location = new System.Drawing.Point(62, 6);
+            this.tagNameLabel.Name = "tagNameLabel";
+            this.tagNameLabel.Size = new System.Drawing.Size(0, 12);
+            this.tagNameLabel.TabIndex = 1;
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(3, 6);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(53, 12);
+            this.label1.TabIndex = 0;
+            this.label1.Text = "tagName:";
             // 
             // panel1
             // 
@@ -50,10 +103,10 @@
             this.panel1.Controls.Add(this.panel5);
             this.panel1.Controls.Add(this.panel4);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Top;
-            this.panel1.Location = new System.Drawing.Point(0, 0);
+            this.panel1.Location = new System.Drawing.Point(0, 24);
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(693, 32);
-            this.panel1.TabIndex = 3;
+            this.panel1.TabIndex = 9;
             // 
             // panel6
             // 
@@ -130,10 +183,10 @@
             // 
             this.panel3.Controls.Add(this.extandedWebBrowser1);
             this.panel3.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel3.Location = new System.Drawing.Point(0, 32);
+            this.panel3.Location = new System.Drawing.Point(0, 56);
             this.panel3.Name = "panel3";
-            this.panel3.Size = new System.Drawing.Size(693, 404);
-            this.panel3.TabIndex = 7;
+            this.panel3.Size = new System.Drawing.Size(693, 380);
+            this.panel3.TabIndex = 10;
             // 
             // extandedWebBrowser1
             // 
@@ -142,7 +195,7 @@
             this.extandedWebBrowser1.MinimumSize = new System.Drawing.Size(20, 20);
             this.extandedWebBrowser1.Name = "extandedWebBrowser1";
             this.extandedWebBrowser1.ScriptErrorsSuppressed = true;
-            this.extandedWebBrowser1.Size = new System.Drawing.Size(693, 404);
+            this.extandedWebBrowser1.Size = new System.Drawing.Size(693, 380);
             this.extandedWebBrowser1.TabIndex = 2;
             this.extandedWebBrowser1.StartNavigate += new System.EventHandler<ExtandedUserControl.BrowserExtendedNavigatingEventArgs>(this.ExtandedWebBrowser1_StartNavigate);
             this.extandedWebBrowser1.StartNewWindow += new System.EventHandler<ExtandedUserControl.BrowserExtendedNavigatingEventArgs>(this.ExtandedWebBrowser1_StartNewWindow);
@@ -160,8 +213,11 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.Controls.Add(this.panel3);
             this.Controls.Add(this.panel1);
+            this.Controls.Add(this.capturePanel);
             this.Name = "WebPage";
             this.Size = new System.Drawing.Size(693, 436);
+            this.capturePanel.ResumeLayout(false);
+            this.capturePanel.PerformLayout();
             this.panel1.ResumeLayout(false);
             this.panel6.ResumeLayout(false);
             this.panel6.PerformLayout();
@@ -172,15 +228,21 @@
         }
 
         #endregion
+
+        private System.Windows.Forms.Panel capturePanel;
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.Panel panel6;
         private System.Windows.Forms.TextBox urlTextBox;
         private System.Windows.Forms.Panel panel5;
         private System.Windows.Forms.Panel panel4;
-        private System.Windows.Forms.Panel panel3;
-        private ExtandedUserControl.ExtandedWebBrowser extandedWebBrowser1;
         private System.Windows.Forms.Button refreshBtn;
         private System.Windows.Forms.Button backBtn;
         private System.Windows.Forms.Button forwardBtn;
+        private System.Windows.Forms.Panel panel3;
+        private ExtandedUserControl.ExtandedWebBrowser extandedWebBrowser1;
+        private System.Windows.Forms.Label idLabel;
+        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.Label tagNameLabel;
+        private System.Windows.Forms.Label label1;
     }
 }

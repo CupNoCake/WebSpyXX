@@ -12,68 +12,12 @@ namespace ExtandedUserControl
 {
     public class ExtandedWebBrowser : WebBrowser
     {
-        public ExtandedWebBrowser() : base()
-        {
-            isCapture = false;
-            hCaptureEle = null;
-            captureCssText = null;
-        }
-
-        private bool isCapture;
-        private string captureCssText;
 
         #region 私有变量
         SHDocVw.IWebBrowser2 axIWebBrowser2;
         AxHost.ConnectionPointCookie cookie;
         WebBrowserExtendedEvents events;
-        private HtmlElement hCaptureEle;
         #endregion
-
-        public void ShowCaptureEle(Point point)
-        {
-            if(isCapture)
-            {
-                HtmlElement hEle = Document.GetElementFromPoint(point);
-
-                if (hCaptureEle == hEle || hEle == null)
-                {
-                    return;
-                }
-
-                if (hCaptureEle != null)
-                {
-                    IHTMLElement iCaptureEle = (IHTMLElement)hCaptureEle.DomElement;
-                    iCaptureEle.style.cssText = captureCssText;
-                }
-
-                //HtmlElement hDiv = Document.CreateElement("DIV");
-                
-              
-
-                hCaptureEle = hEle;
-                IHTMLElement iht = (IHTMLElement)hEle.DomElement;
-                captureCssText = iht.style.cssText;
-                //iht.style.border = "1px solid red";
-                iht.style.cssText = "background: rgba(135, 206, 250, 0.5)";
-
-            }
-        }
-
-        public void SetCapture()
-        {
-            if(isCapture)
-            {
-                if (hCaptureEle != null)
-                {
-                    IHTMLElement iCaptureEle = (IHTMLElement)hCaptureEle.DomElement;
-                    iCaptureEle.style.cssText = captureCssText;
-                    //iCaptureEle.style.border = "";
-                    hCaptureEle = null;
-                }
-            }
-
-            isCapture = !isCapture;
-        }
 
         #region override method
         /// <summary>
@@ -285,10 +229,20 @@ namespace ExtandedUserControl
             Quit?.Invoke(this, EventArgs.Empty);
         }
 
+        private void InitDocumentEvent(HtmlDocument doc)
+        {
+            doc.MouseMove += Document_MouseMove;
+            doc.MouseDown += Document_MouseDown;
+
+            for (int i = 0; i < doc.Window.Frames.Count; i++)
+            {
+                InitDocumentEvent(doc.Window.Frames[i].Document);
+            }
+        }
+
         protected void OnDocumentComplete()
         {
-            Document.MouseMove += Document_MouseMove;
-            Document.MouseDown += Document_MouseDown;
+            InitDocumentEvent(Document);
         }
 
        
