@@ -89,12 +89,12 @@ namespace WebSpyXX
             isAppExit = true;
         }
 
-        public void LoadScript(string scriptText)
+        public void LoadScript(HtmlDocument document, string scriptText)
         {
             //找到head元素
-            HtmlElement head = extandedWebBrowser1.Document.GetElementsByTagName("head")[0];
+            HtmlElement head = document.GetElementsByTagName("head")[0];
             //创建script标签
-            HtmlElement scriptEl = extandedWebBrowser1.Document.CreateElement("script");
+            HtmlElement scriptEl = document.CreateElement("script");
             IHTMLScriptElement element = (IHTMLScriptElement)scriptEl.DomElement;
             //给script标签加js内容
             element.text = scriptText;
@@ -102,9 +102,14 @@ namespace WebSpyXX
             head.AppendChild(scriptEl);
         }
 
-        public void ExcuteScript(string script)
+        public void ExcuteScript(HtmlDocument document, string script)
         {
-            extandedWebBrowser1.Document.InvokeScript(script);
+            document.InvokeScript(script);
+        }
+
+        public void ExcuteScript(HtmlDocument document, string script, object[] args)
+        {
+            document.InvokeScript(script, args);
         }
 
         public void SetCapture()
@@ -125,6 +130,33 @@ namespace WebSpyXX
 
             isCapture = !isCapture;
             capturePanel.Visible = !capturePanel.Visible;
+        }
+
+        private void FindTableAndExport(HtmlDocument document, HtmlElement hEle)
+        {
+            if(hEle.TagName.Equals("TABLE"))
+            {
+                string tableHtml = "<html><head><meta charset=\"UTF - 8\"></head><body>";
+                tableHtml += hEle.OuterHtml;
+                tableHtml += "</body></html>";
+
+                ExcuteScript(document, "tableToExcel", new object[] { tableHtml});
+            }
+            else
+            {
+                foreach(HtmlElement hSubEle in hEle.Children)
+                {
+                    FindTableAndExport(document, hSubEle);
+                }
+            }
+        }
+
+        public void ExportTable(HtmlDocument document)
+        {
+            if(isCapture && hCaptureEle != null)
+            {
+                FindTableAndExport(document, hCaptureEle);
+            }
         }
         #endregion
 
@@ -188,13 +220,16 @@ namespace WebSpyXX
         private void BackBtn_Click(object sender, EventArgs e)
         {
 
-            extandedWebBrowser1.Document.InvokeScript(@"window.external.MyMessageBox('javascript访问C#代码')");
+            //extandedWebBrowser1.Document.InvokeScript(@"window.external.MyMessageBox('javascript访问C#代码')");
             extandedWebBrowser1.GoBack();
         }
+
+        public event EventHandler PageClose;
 
         private void ExtandedWebBrowser1_Quit(object sender, EventArgs e)
         {
             isAppExit = true;
+            PageClose?.Invoke(this, EventArgs.Empty);
         }
 
 
@@ -220,16 +255,6 @@ namespace WebSpyXX
         private void ExtandedWebBrowser1_DocumentCompleted(object sender, WebBrowserDocumentCompletedEventArgs e)
         {
             
-        }
-
-        #endregion
-
-        protected void OnStatusTextChange(WebStatusTextEventArgs e)
-        {
-            if (e == null)
-                throw new ArgumentNullException("e");
-
-            StatusTextChange?.Invoke(this, e);
         }
 
         private void ExtandedWebBrowser1_DocMouseMove(object sender, HtmlElementEventArgs e)
@@ -262,14 +287,35 @@ namespace WebSpyXX
 
         private void ExtandedWebBrowser1_DocMouseDown(object sender, HtmlElementEventArgs e)
         {
-            if(e.MouseButtonsPressed == MouseButtons.Left)
+            if (e.MouseButtonsPressed == MouseButtons.Left)
             {
-                if(isCapture)
+                if (isCapture)
                 {
+                    string script = @"function tableToExcel(tableHtml){
+                        var excelBlob = new Blob([tableHtml], {type: 'application/vnd.ms-excel'});
+                        var fileName = 'table.xls';
+                        window.navigator.msSaveOrOpenBlob(excelBlob,fileName);
+                    }";
+                    LoadScript(sender as HtmlDocument, script);
+                    ExportTable(sender as HtmlDocument);
                     SetCapture();
-
                 }
             }
+        }
+
+        private void ExtandedWebBrowser1_DocClick(object sender, HtmlElementEventArgs e)
+        {
+
+        }
+
+        #endregion
+
+        protected void OnStatusTextChange(WebStatusTextEventArgs e)
+        {
+            if (e == null)
+                throw new ArgumentNullException("e");
+
+            StatusTextChange?.Invoke(this, e);
         }
     }
 }

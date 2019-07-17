@@ -19,19 +19,6 @@ namespace WebSpyXX
         public WebSpyForm()
         {
             InitializeComponent();
-            
-            int ieVersion = GetBrowserVersion();
-            if (IfWindowsSupport())
-            {
-                SetWebBrowserFeatures(ieVersion < 11 ? ieVersion : 11);
-            }
-            else
-            {
-                // 如果不支持IE8 则修改为当前系统的IE版本
-                SetWebBrowserFeatures(ieVersion < 7 ? 7 : ieVersion);
-            }
-
-            NewPage(null);
         }
 
         #region 浏览器设置
@@ -130,6 +117,7 @@ namespace WebSpyXX
 
         #endregion
 
+        #region 页面操作
         private void NewPage(string url)
         {
             WebPage webPage = new WebPage();
@@ -138,6 +126,7 @@ namespace WebSpyXX
             webPage.NewWindow += WebPage_NewWindow;
             webPage.StatusTextChange += WebPage_StatusTextChange;
             webPage.DocumentTitleChange += WebPage_DocumentTitleChange;
+            webPage.PageClose += WebPage_PageClose;
             
 
             TabPage tabPage = new TabPage("新标签页");
@@ -189,21 +178,31 @@ namespace WebSpyXX
                 (tabControl1.TabPages[index].Controls[0] as WebPage).SetCapture();
             }
         }
+        #endregion
 
+        #region 窗体事件函数
         private void Form1_Load(object sender, EventArgs e)
         {
+            int ieVersion = GetBrowserVersion();
+            if (IfWindowsSupport())
+            {
+                SetWebBrowserFeatures(ieVersion < 11 ? ieVersion : 11);
+            }
+            else
+            {
+                // 如果不支持IE8 则修改为当前系统的IE版本
+                SetWebBrowserFeatures(ieVersion < 7 ? 7 : ieVersion);
+            }
 
+            NewPage(null);
         }
 
-        private void Form1_FormClosed(object sender, FormClosedEventArgs e)
+        private void WebSpyForm_FormClosed(object sender, FormClosedEventArgs e)
         {
-           
-
-        }
-
-        private void WebSpyXX_FormClosing(object sender, FormClosingEventArgs e)
-        {
-
+            foreach (TabPage tabPage in tabControl1.TabPages)
+            {
+                (tabPage.Controls[0] as WebPage).Close();
+            }
         }
 
         private void WebPage_StatusTextChange(object sender, WebStatusTextEventArgs e)
@@ -222,6 +221,18 @@ namespace WebSpyXX
             tabPage.Text = e.Title;
         }
 
+        private void WebPage_PageClose(object sender, EventArgs e)
+        {
+            for (int index = 0; index < tabControl1.TabPages.Count; index++)
+            {
+                if (sender == tabControl1.TabPages[index].Controls[0])
+                {
+                    ClosePage(index);
+                    break;
+                }
+            }
+        }
+
         private void Tsmi_newPage_Click(object sender, EventArgs e)
         {
             NewPage(null);
@@ -236,5 +247,8 @@ namespace WebSpyXX
         {
             SetCapture(tabControl1.SelectedIndex);
         }
+        #endregion
+
+
     }
 }

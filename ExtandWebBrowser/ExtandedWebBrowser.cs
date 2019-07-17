@@ -80,8 +80,17 @@ namespace ExtandedUserControl
         {
             switch(m.Msg)
             {
-                case (int)WindowsMessages.WM_DESTROY:
-                    OnQuit();
+                //case (int)WindowsMessages.WM_DESTROY:
+                    //OnQuit();
+                    //break;
+                case (int)WindowsMessages.WM_PARENTNOTIFY:
+                    {
+                        int X = (int)m.WParam & 0xFFFF;
+                        if (X == 0x2/*WM_DESTROY*/)//若收到该消息，引发WindowClosed事件
+                        {
+                            OnQuit();
+                        }
+                    }
                     break;
                 default:
                     break;
@@ -137,6 +146,7 @@ namespace ExtandedUserControl
 
         public event EventHandler<HtmlElementEventArgs> DocMouseMove;
         public event EventHandler<HtmlElementEventArgs> DocMouseDown;
+        public event EventHandler<HtmlElementEventArgs> DocClick;
 
         #endregion
 
@@ -233,6 +243,7 @@ namespace ExtandedUserControl
         {
             doc.MouseMove += Document_MouseMove;
             doc.MouseDown += Document_MouseDown;
+            doc.Click += Document_Click;
 
             for (int i = 0; i < doc.Window.Frames.Count; i++)
             {
@@ -261,6 +272,13 @@ namespace ExtandedUserControl
             if (e == null)
                 throw new ArgumentNullException("e");
             DocMouseDown?.Invoke(sender, e);
+        }
+
+        private void Document_Click(object sender, HtmlElementEventArgs e)
+        {
+            if (e == null)
+                throw new ArgumentNullException("e");
+            DocClick?.Invoke(sender, e);
         }
 
         #region 属性

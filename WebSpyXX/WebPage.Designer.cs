@@ -204,6 +204,7 @@
             this.extandedWebBrowser1.Quit += new System.EventHandler(this.ExtandedWebBrowser1_Quit);
             this.extandedWebBrowser1.DocMouseMove += new System.EventHandler<System.Windows.Forms.HtmlElementEventArgs>(this.ExtandedWebBrowser1_DocMouseMove);
             this.extandedWebBrowser1.DocMouseDown += new System.EventHandler<System.Windows.Forms.HtmlElementEventArgs>(this.ExtandedWebBrowser1_DocMouseDown);
+            this.extandedWebBrowser1.DocClick += new System.EventHandler<System.Windows.Forms.HtmlElementEventArgs>(this.ExtandedWebBrowser1_DocClick);
             this.extandedWebBrowser1.DocumentCompleted += new System.Windows.Forms.WebBrowserDocumentCompletedEventHandler(this.ExtandedWebBrowser1_DocumentCompleted);
             this.extandedWebBrowser1.Navigated += new System.Windows.Forms.WebBrowserNavigatedEventHandler(this.ExtandedWebBrowser1_Navigated);
             // 
