@@ -89,6 +89,12 @@
   <ItemGroup>
     <Compile Include="DocumentTitleEventArgs.cs" />
     <Compile Include="NewWindowEventArgs.cs" />
+    <Compile Include="SettingDlg.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SettingDlg.Designer.cs">
+      <DependentUpon>SettingDlg.cs</DependentUpon>
+    </Compile>
     <Compile Include="WebStatusTextEventArgs.cs" />
     <Compile Include="WebPage.cs">
       <SubType>UserControl</SubType>
@@ -104,6 +110,9 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="SettingDlg.resx">
+      <DependentUpon>SettingDlg.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="WebPage.resx">
       <DependentUpon>WebPage.cs</DependentUpon>
     </EmbeddedResource>

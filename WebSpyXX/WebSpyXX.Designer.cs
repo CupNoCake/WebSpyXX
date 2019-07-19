@@ -36,7 +36,7 @@
             this.打印ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.工具ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.加载脚本文件ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.配置ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.tsmi_options = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmi_capture = new System.Windows.Forms.ToolStripMenuItem();
             this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.tsmi_newPage = new System.Windows.Forms.ToolStripMenuItem();
@@ -95,7 +95,7 @@
             // 
             this.工具ToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.加载脚本文件ToolStripMenuItem,
-            this.配置ToolStripMenuItem,
+            this.tsmi_options,
             this.tsmi_capture});
             this.工具ToolStripMenuItem.Name = "工具ToolStripMenuItem";
             this.工具ToolStripMenuItem.Size = new System.Drawing.Size(44, 21);
@@ -104,20 +104,21 @@
             // 加载脚本文件ToolStripMenuItem
             // 
             this.加载脚本文件ToolStripMenuItem.Name = "加载脚本文件ToolStripMenuItem";
-            this.加载脚本文件ToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.加载脚本文件ToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.加载脚本文件ToolStripMenuItem.Text = "加载脚本文件";
             // 
-            // 配置ToolStripMenuItem
+            // tsmi_options
             // 
-            this.配置ToolStripMenuItem.Name = "配置ToolStripMenuItem";
-            this.配置ToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-            this.配置ToolStripMenuItem.Text = "配置";
+            this.tsmi_options.Name = "tsmi_options";
+            this.tsmi_options.Size = new System.Drawing.Size(152, 22);
+            this.tsmi_options.Text = "配置";
+            this.tsmi_options.Click += new System.EventHandler(this.tsmi_options_Click);
             // 
             // tsmi_capture
             // 
             this.tsmi_capture.Name = "tsmi_capture";
             this.tsmi_capture.ShortcutKeys = System.Windows.Forms.Keys.F2;
-            this.tsmi_capture.Size = new System.Drawing.Size(180, 22);
+            this.tsmi_capture.Size = new System.Drawing.Size(152, 22);
             this.tsmi_capture.Text = "抓取";
             this.tsmi_capture.Click += new System.EventHandler(this.Tsmi_capture_Click);
             // 
@@ -193,7 +194,7 @@
         private System.Windows.Forms.ToolStripMenuItem 工具ToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem 加载脚本文件ToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem 打印ToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem 配置ToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem tsmi_options;
         private System.Windows.Forms.ContextMenuStrip contextMenuStrip1;
         private System.Windows.Forms.ToolStripMenuItem tsmi_newPage;
         private System.Windows.Forms.ToolStripMenuItem tsmi_closeCurrent;

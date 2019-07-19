@@ -247,8 +247,14 @@ namespace WebSpyXX
         {
             SetCapture(tabControl1.SelectedIndex);
         }
+
         #endregion
 
+        private void tsmi_options_Click(object sender, EventArgs e)
+        {
+            SettingDlg dlg = new SettingDlg();
 
+            dlg.ShowDialog();
+        }
     }
 }
