@@ -104,13 +104,13 @@
             // 加载脚本文件ToolStripMenuItem
             // 
             this.加载脚本文件ToolStripMenuItem.Name = "加载脚本文件ToolStripMenuItem";
-            this.加载脚本文件ToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.加载脚本文件ToolStripMenuItem.Size = new System.Drawing.Size(148, 22);
             this.加载脚本文件ToolStripMenuItem.Text = "加载脚本文件";
             // 
             // tsmi_options
             // 
             this.tsmi_options.Name = "tsmi_options";
-            this.tsmi_options.Size = new System.Drawing.Size(152, 22);
+            this.tsmi_options.Size = new System.Drawing.Size(148, 22);
             this.tsmi_options.Text = "配置";
             this.tsmi_options.Click += new System.EventHandler(this.tsmi_options_Click);
             // 
@@ -118,7 +118,7 @@
             // 
             this.tsmi_capture.Name = "tsmi_capture";
             this.tsmi_capture.ShortcutKeys = System.Windows.Forms.Keys.F2;
-            this.tsmi_capture.Size = new System.Drawing.Size(152, 22);
+            this.tsmi_capture.Size = new System.Drawing.Size(148, 22);
             this.tsmi_capture.Text = "抓取";
             this.tsmi_capture.Click += new System.EventHandler(this.Tsmi_capture_Click);
             // 

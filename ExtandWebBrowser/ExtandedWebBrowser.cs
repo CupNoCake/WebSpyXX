@@ -239,6 +239,7 @@ namespace ExtandedUserControl
             Quit?.Invoke(this, EventArgs.Empty);
         }
 
+        [PermissionSet(SecurityAction.LinkDemand, Name = "FullTrust")]
         private void InitDocumentEvent(HtmlDocument doc)
         {
             doc.MouseMove += Document_MouseMove;
@@ -251,9 +252,10 @@ namespace ExtandedUserControl
             }
         }
 
+        [PermissionSet(SecurityAction.LinkDemand, Name = "FullTrust")]
         protected void OnDocumentComplete()
         {
-            InitDocumentEvent(Document);
+            //InitDocumentEvent(Document);
         }
 
        

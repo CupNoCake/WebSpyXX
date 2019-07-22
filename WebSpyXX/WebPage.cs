@@ -192,7 +192,8 @@ namespace WebSpyXX
             }
             else
             {
-                Navigate(extandedWebBrowser1.Url.ToString());
+                if(extandedWebBrowser1.Url != null)
+                    Navigate(extandedWebBrowser1.Url.ToString());
             }
         }
 
