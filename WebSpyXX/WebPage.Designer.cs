@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.capturePanel = new System.Windows.Forms.Panel();
             this.idLabel = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
@@ -37,15 +38,19 @@
             this.panel6 = new System.Windows.Forms.Panel();
             this.urlTextBox = new System.Windows.Forms.TextBox();
             this.panel5 = new System.Windows.Forms.Panel();
+            this.label2 = new System.Windows.Forms.Label();
+            this.cookieTextBox = new System.Windows.Forms.TextBox();
             this.panel4 = new System.Windows.Forms.Panel();
             this.refreshBtn = new System.Windows.Forms.Button();
             this.backBtn = new System.Windows.Forms.Button();
             this.forwardBtn = new System.Windows.Forms.Button();
             this.panel3 = new System.Windows.Forms.Panel();
             this.extandedWebBrowser1 = new ExtandedUserControl.ExtandedWebBrowser();
+            this.timer1 = new System.Windows.Forms.Timer(this.components);
             this.capturePanel.SuspendLayout();
             this.panel1.SuspendLayout();
             this.panel6.SuspendLayout();
+            this.panel5.SuspendLayout();
             this.panel4.SuspendLayout();
             this.panel3.SuspendLayout();
             this.SuspendLayout();
@@ -59,7 +64,7 @@
             this.capturePanel.Dock = System.Windows.Forms.DockStyle.Top;
             this.capturePanel.Location = new System.Drawing.Point(0, 0);
             this.capturePanel.Name = "capturePanel";
-            this.capturePanel.Size = new System.Drawing.Size(693, 24);
+            this.capturePanel.Size = new System.Drawing.Size(844, 24);
             this.capturePanel.TabIndex = 8;
             this.capturePanel.Visible = false;
             // 
@@ -105,7 +110,7 @@
             this.panel1.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel1.Location = new System.Drawing.Point(0, 24);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(693, 32);
+            this.panel1.Size = new System.Drawing.Size(844, 32);
             this.panel1.TabIndex = 9;
             // 
             // panel6
@@ -115,7 +120,7 @@
             this.panel6.Location = new System.Drawing.Point(120, 0);
             this.panel6.Name = "panel6";
             this.panel6.Padding = new System.Windows.Forms.Padding(0, 5, 0, 0);
-            this.panel6.Size = new System.Drawing.Size(422, 32);
+            this.panel6.Size = new System.Drawing.Size(497, 32);
             this.panel6.TabIndex = 3;
             // 
             // urlTextBox
@@ -125,18 +130,36 @@
             this.urlTextBox.Dock = System.Windows.Forms.DockStyle.Fill;
             this.urlTextBox.Location = new System.Drawing.Point(0, 5);
             this.urlTextBox.Name = "urlTextBox";
-            this.urlTextBox.Size = new System.Drawing.Size(422, 21);
+            this.urlTextBox.Size = new System.Drawing.Size(497, 21);
             this.urlTextBox.TabIndex = 0;
             this.urlTextBox.Enter += new System.EventHandler(this.UrlTextBox_Enter);
             this.urlTextBox.KeyDown += new System.Windows.Forms.KeyEventHandler(this.UrlTextBox_KeyDown);
             // 
             // panel5
             // 
+            this.panel5.Controls.Add(this.label2);
+            this.panel5.Controls.Add(this.cookieTextBox);
             this.panel5.Dock = System.Windows.Forms.DockStyle.Right;
-            this.panel5.Location = new System.Drawing.Point(542, 0);
+            this.panel5.Location = new System.Drawing.Point(617, 0);
             this.panel5.Name = "panel5";
-            this.panel5.Size = new System.Drawing.Size(151, 32);
+            this.panel5.Size = new System.Drawing.Size(227, 32);
             this.panel5.TabIndex = 2;
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(6, 14);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(41, 12);
+            this.label2.TabIndex = 1;
+            this.label2.Text = "Cookie";
+            // 
+            // cookieTextBox
+            // 
+            this.cookieTextBox.Location = new System.Drawing.Point(53, 5);
+            this.cookieTextBox.Name = "cookieTextBox";
+            this.cookieTextBox.Size = new System.Drawing.Size(150, 21);
+            this.cookieTextBox.TabIndex = 0;
             // 
             // panel4
             // 
@@ -185,7 +208,7 @@
             this.panel3.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel3.Location = new System.Drawing.Point(0, 56);
             this.panel3.Name = "panel3";
-            this.panel3.Size = new System.Drawing.Size(693, 380);
+            this.panel3.Size = new System.Drawing.Size(844, 457);
             this.panel3.TabIndex = 10;
             // 
             // extandedWebBrowser1
@@ -195,7 +218,7 @@
             this.extandedWebBrowser1.MinimumSize = new System.Drawing.Size(20, 20);
             this.extandedWebBrowser1.Name = "extandedWebBrowser1";
             this.extandedWebBrowser1.ScriptErrorsSuppressed = true;
-            this.extandedWebBrowser1.Size = new System.Drawing.Size(693, 380);
+            this.extandedWebBrowser1.Size = new System.Drawing.Size(844, 457);
             this.extandedWebBrowser1.TabIndex = 2;
             this.extandedWebBrowser1.StartNavigate += new System.EventHandler<ExtandedUserControl.BrowserExtendedNavigatingEventArgs>(this.ExtandedWebBrowser1_StartNavigate);
             this.extandedWebBrowser1.StartNewWindow += new System.EventHandler<ExtandedUserControl.BrowserExtendedNavigatingEventArgs>(this.ExtandedWebBrowser1_StartNewWindow);
@@ -208,6 +231,11 @@
             this.extandedWebBrowser1.DocumentCompleted += new System.Windows.Forms.WebBrowserDocumentCompletedEventHandler(this.ExtandedWebBrowser1_DocumentCompleted);
             this.extandedWebBrowser1.Navigated += new System.Windows.Forms.WebBrowserNavigatedEventHandler(this.ExtandedWebBrowser1_Navigated);
             // 
+            // timer1
+            // 
+            this.timer1.Interval = 300000;
+            this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
+            // 
             // WebPage
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -216,12 +244,14 @@
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.capturePanel);
             this.Name = "WebPage";
-            this.Size = new System.Drawing.Size(693, 436);
+            this.Size = new System.Drawing.Size(844, 513);
             this.capturePanel.ResumeLayout(false);
             this.capturePanel.PerformLayout();
             this.panel1.ResumeLayout(false);
             this.panel6.ResumeLayout(false);
             this.panel6.PerformLayout();
+            this.panel5.ResumeLayout(false);
+            this.panel5.PerformLayout();
             this.panel4.ResumeLayout(false);
             this.panel3.ResumeLayout(false);
             this.ResumeLayout(false);
@@ -245,5 +275,8 @@
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label tagNameLabel;
         private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.TextBox cookieTextBox;
+        private System.Windows.Forms.Timer timer1;
     }
 }

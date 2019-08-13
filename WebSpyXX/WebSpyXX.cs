@@ -11,6 +11,7 @@ using System.IO;
 using Microsoft.Win32;
 using System.Threading;
 using mshtml;
+using DevComponents.DotNetBar;
 
 namespace WebSpyXX
 {
@@ -129,40 +130,55 @@ namespace WebSpyXX
             webPage.PageClose += WebPage_PageClose;
             
 
-            TabPage tabPage = new TabPage("新标签页");
-            tabPage.Controls.Add(webPage);
-           
-            if (tabControl1.TabPages.Count > 0)
+            //TabPage tabPage = new TabPage("新标签页");
+            //tabPage.Controls.Add(webPage);
+
+            SuperTabControlPanel panel = new SuperTabControlPanel();
+            panel.Dock = DockStyle.Fill;
+            panel.Controls.Add(webPage);
+
+            superTabControl1.Controls.Add(panel);
+
+            SuperTabItem tabItem = new SuperTabItem();
+            tabItem.AttachedControl = panel;
+            tabItem.Text = "新标签页";
+            
+            panel.TabItem = tabItem;
+
+            //tabControl1.Tabs.Add(tabItem);
+
+
+            if (superTabControl1.Tabs.Count > 0)
             {
-                tabControl1.TabPages.Insert(tabControl1.SelectedIndex + 1, tabPage);
+                superTabControl1.Tabs.Insert(superTabControl1.SelectedTabIndex + 1, tabItem);
             }
             else
             {
-                tabControl1.TabPages.Add(tabPage);
+                superTabControl1.Tabs.Add(tabItem);
             }
 
-            if (tabControl1.SelectedTab != tabPage)
-                tabControl1.SelectTab(tabPage);
+            if (superTabControl1.SelectedTab != tabItem)
+                superTabControl1.SelectedTab = tabItem;
 
             webPage.Navigate(url);
         }
 
         private void ClosePage(int index)
         {
-            if(index >= 0 && index < tabControl1.TabPages.Count)
+            if(index >= 0 && index < superTabControl1.Tabs.Count)
             {
-                if (tabControl1.TabPages.Count > 1)
+                if (superTabControl1.Tabs.Count > 1)
                 {
-                    (tabControl1.TabPages[index].Controls[0] as WebPage).Close();
-                    tabControl1.TabPages.RemoveAt(index);
+                    ((superTabControl1.Tabs[index] as SuperTabItem).AttachedControl.Controls[0] as WebPage).Close();
+                    superTabControl1.Tabs.RemoveAt(index);
 
-                    if (index == tabControl1.TabPages.Count)
+                    if (index == superTabControl1.Tabs.Count)
                     {
-                        tabControl1.SelectedIndex = tabControl1.TabPages.Count - 1;
+                        superTabControl1.SelectedTabIndex = superTabControl1.Tabs.Count - 1;
                     }
                     else
                     {
-                        tabControl1.SelectedIndex = index;
+                        superTabControl1.SelectedTabIndex = index;
                     }
                 }
                 else
@@ -171,11 +187,35 @@ namespace WebSpyXX
             
         }
 
+        //private void ClosePage(TabItem tabItem)
+        //{
+        //    if (index >= 0 && index < tabControl1.Tabs.Count)
+        //    {
+        //        if (tabControl1.Tabs.Count > 1)
+        //        {
+        //            (tabControl1.Tabs[index].AttachedControl.Controls[0] as WebPage).Close();
+        //            tabControl1.Tabs.RemoveAt(index);
+
+        //            if (index == tabControl1.Tabs.Count)
+        //            {
+        //                tabControl1.SelectedTabIndex = tabControl1.Tabs.Count - 1;
+        //            }
+        //            else
+        //            {
+        //                tabControl1.SelectedTabIndex = index;
+        //            }
+        //        }
+        //        else
+        //            Close();
+        //    }
+
+        //}
+
         private void SetCapture(int index)
         {
-            if (index >= 0 && index < tabControl1.TabPages.Count)
+            if (index >= 0 && index < superTabControl1.Tabs.Count)
             {
-                (tabControl1.TabPages[index].Controls[0] as WebPage).SetCapture();
+                ((superTabControl1.Tabs[index] as SuperTabItem).AttachedControl.Controls[0] as WebPage).SetCapture();
             }
         }
         #endregion
@@ -199,9 +239,9 @@ namespace WebSpyXX
 
         private void WebSpyForm_FormClosed(object sender, FormClosedEventArgs e)
         {
-            foreach (TabPage tabPage in tabControl1.TabPages)
+            foreach (SuperTabItem tabItem in superTabControl1.Tabs)
             {
-                (tabPage.Controls[0] as WebPage).Close();
+                (tabItem.AttachedControl.Controls[0] as WebPage).Close();
             }
         }
 
@@ -217,15 +257,15 @@ namespace WebSpyXX
 
         private void WebPage_DocumentTitleChange(object sender, DocumentTitleEventArgs e)
         {
-            TabPage tabPage = (sender as Control).Parent as TabPage;
-            tabPage.Text = e.Title;
+            SuperTabControlPanel panel = (sender as Control).Parent as SuperTabControlPanel;
+            panel.TabItem.Text = e.Title;
         }
 
         private void WebPage_PageClose(object sender, EventArgs e)
         {
-            for (int index = 0; index < tabControl1.TabPages.Count; index++)
+            for (int index = 0; index < superTabControl1.Tabs.Count; index++)
             {
-                if (sender == tabControl1.TabPages[index].Controls[0])
+                if (sender == (superTabControl1.Tabs[index] as SuperTabItem).AttachedControl.Controls[0])
                 {
                     ClosePage(index);
                     break;
@@ -240,12 +280,12 @@ namespace WebSpyXX
 
         private void Tsmi_closeCurrent_Click(object sender, EventArgs e)
         {
-            ClosePage(tabControl1.SelectedIndex);
+            ClosePage(superTabControl1.SelectedTabIndex);
         }
 
         private void Tsmi_capture_Click(object sender, EventArgs e)
         {
-            SetCapture(tabControl1.SelectedIndex);
+            SetCapture(superTabControl1.SelectedTabIndex);
         }
 
         #endregion
@@ -255,6 +295,30 @@ namespace WebSpyXX
             SettingDlg dlg = new SettingDlg();
 
             dlg.ShowDialog();
+        }
+
+        private void superTabControl1_TabItemClose(object sender, SuperTabStripTabItemCloseEventArgs e)
+        {
+            //ClosePage(superTabControl1.Tabs.IndexOf(e.Tab));
+
+            ((e.Tab as SuperTabItem).AttachedControl.Controls[0] as WebPage).Close();
+        }
+
+        private void superTabControl1_SelectedTabChanged(object sender, SuperTabStripSelectedTabChangedEventArgs e)
+        {
+            
+        }
+
+        private void superTabControl1_TabRemoved(object sender, SuperTabStripTabRemovedEventArgs e)
+        {
+            if (superTabControl1.Tabs.Count == 0)
+                Close();
+        }
+
+        private void tsmi_captureWeb_Click(object sender, EventArgs e)
+        {
+            if (superTabControl1.Tabs.Count > 0)
+                (superTabControl1.SelectedTab.AttachedControl.Controls[0] as WebPage).CaptureWindow();
         }
     }
 }
