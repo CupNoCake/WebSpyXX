@@ -12,6 +12,7 @@ using System.Runtime.InteropServices;
 using System.Net;
 using System.Security;
 using System.Security.Permissions;
+using Newtonsoft.Json;
 
 namespace WebSpyXX
 {
@@ -186,7 +187,7 @@ namespace WebSpyXX
             isAppExit = true;
         }
 
-        public void LoadScript(HtmlDocument document, string scriptText)
+        private void LoadScript(HtmlDocument document, string scriptText)
         {
             //找到head元素
             HtmlElement head = document.GetElementsByTagName("head")[0];
@@ -199,14 +200,32 @@ namespace WebSpyXX
             head.AppendChild(scriptEl);
         }
 
-        public void ExcuteScript(HtmlDocument document, string script)
+        public void LoadScript(string scriptText)
         {
-            document.InvokeScript(script);
+            if(extandedWebBrowser1.ReadyState == WebBrowserReadyState.Complete)
+            {
+                LoadScript(extandedWebBrowser1.Document, scriptText);
+            }
         }
 
-        public void ExcuteScript(HtmlDocument document, string script, object[] args)
+        public object ExcuteScript(string script)
         {
-            document.InvokeScript(script, args);
+            return ExcuteScript(extandedWebBrowser1.Document, script);
+        }
+
+        public object ExcuteScript(string script, object[] args)
+        {
+            return ExcuteScript(extandedWebBrowser1.Document, script, args);
+        }
+
+        private object ExcuteScript(HtmlDocument document, string script)
+        {
+            return document.InvokeScript(script);
+        }
+
+        private object ExcuteScript(HtmlDocument document, string script, object[] args)
+        {
+            return document.InvokeScript(script, args);
         }
 
         public void SetCapture()

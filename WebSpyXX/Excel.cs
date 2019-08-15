@@ -9,6 +9,8 @@ using NPOI.SS.Util;
 using NPOI.HPSF;
 using System.Windows.Forms;
 using System.IO;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 
 namespace WebSpyXX
 {
@@ -38,13 +40,13 @@ namespace WebSpyXX
         }
 
         //演示用的模板，后面单元格边框问题介绍使用
-        public void CreateTemplate(HSSFSheet sheet)
+        public void CreateTemplate(HSSFSheet sheet, int rowCount, int colCount)
         {
-            for (int i = 0; i < 50; i++)
+            for (int i = 0; i < rowCount; i++)
             {
                 //npoi中每行以及每个需要用到的单元格都要去创建，不创建就无法使用，当然，不用的单元格可以不用创建
                 HSSFRow row = sheet.CreateRow(i) as HSSFRow;
-                for (int j = 0; j < 6; j++)
+                for (int j = 0; j < colCount; j++)
                 {
                     HSSFCell cell = row.CreateCell(j) as HSSFCell;
                 }
@@ -412,7 +414,7 @@ namespace WebSpyXX
             HSSFSheet sheet = _hssfWorkbook.CreateSheet("分析结果") as HSSFSheet;
 
 
-            CreateTemplate(sheet);
+            CreateTemplate(sheet, 50, 6);
             SetCellBorder(sheet, NPOI.SS.UserModel.BorderStyle.Dashed, NPOI.SS.UserModel.BorderStyle.Thin);
 
 
@@ -465,6 +467,104 @@ namespace WebSpyXX
         }
         #endregion
 
+        private string GetShowText(List<DataInfo> dataList, string showAttr, out string attrText)
+        {
+            string text = "";
+            string attr = "";
+            foreach (var data in dataList)
+            {
+                if (data.Type == "LABEL" || data.Type == "HEAD" || data.Type == "SUBHEAD")
+                    text += data.Text;
 
+                object value;
+                if (showAttr.Length > 0 && data.Attr.TryGetValue(showAttr, out value))
+                {
+                    attr += "[" + data.Id + "]";
+                    attr += value.ToString();
+                }
+
+                string childAttr;
+                text += GetShowText(data.Children, showAttr, out childAttr);
+                attr += childAttr;
+            }
+
+            attrText = attr;
+            return text;
+        }
+
+        public void CreateSheetByTable(Table table)
+        {
+            int colCount = 0;
+            int rowCount = 0;
+            int colHeight = 0;
+            int rowWidth = 0;
+
+            Dictionary<int, int> rowHeightDic = new Dictionary<int, int>();
+            Dictionary<int, int> colWidthDic = new Dictionary<int, int>();
+
+            // 获取行列，行高，列宽
+            foreach (var cell in table.Cells)
+            {
+                if (cell.Col + 1 > colCount)
+                    colCount = cell.Col + 1;
+
+                if (cell.Row + 1 > rowCount)
+                    rowCount = cell.Row + 1;
+
+                if(cell.RowSpan == 1 && !rowHeightDic.TryGetValue(cell.Row, out colHeight))
+                {
+                    rowHeightDic[cell.Row] = cell.Height;
+                }
+
+                if(cell.DataList[0].Type != "HEAD" && cell.DataList[0].Type != "SUBHEAD" && cell.ColSpan == 1 && !colWidthDic.TryGetValue(cell.Col, out rowWidth))
+                {
+                    colWidthDic[cell.Col] = cell.Width;
+                }
+            }
+
+            HSSFSheet sheet = CreateSheet(table.Cells[0].DataList[0].Text);
+
+            CreateTemplate(sheet, rowCount, colCount);
+
+
+            foreach (var cell in table.Cells)
+            {
+                if(cell.DataList[0].Type == "HEAD" || cell.DataList[0].Type == "SUBHEAD")
+                {
+                    sheet.AddMergedRegion(new CellRangeAddress(cell.Row, cell.Row, cell.Col, colCount - 1));
+                }
+                else
+                {
+                    if (cell.ColSpan != 1 || cell.RowSpan != 1)
+                    {
+                        sheet.AddMergedRegion(new CellRangeAddress(cell.Row, cell.Row + cell.RowSpan - 1, cell.Col, cell.Col + cell.ColSpan - 1));
+                    }
+                }
+
+                string attrText;
+                string text = GetShowText(cell.DataList, cell.ShowAttr, out attrText);
+               
+                IRow irow = sheet.GetRow(cell.Row);
+                //irow.HeightInPoints = cell.Height;
+                ICell iCell = irow.GetCell(cell.Col);
+
+                if (attrText.Length > 0)
+                    iCell.SetCellValue(attrText);
+                else
+                    iCell.SetCellValue(text);
+            }
+
+            SetCellBorder(sheet, NPOI.SS.UserModel.BorderStyle.Medium, NPOI.SS.UserModel.BorderStyle.Thin);
+
+            foreach (var item in colWidthDic)
+            {
+                sheet.SetColumnWidth(item.Key, item.Value * 40);
+            }
+
+            string exportFileName = sheet.SheetName + ".xls";
+
+            SaveFileDialog dlg = SelectExportPath(exportFileName);
+            ExportToExcel(dlg);
+        }
     }
 }

@@ -35,9 +35,13 @@
             this.文件ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.打印ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.工具ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.加载脚本文件ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.tsmi_loadjs = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmi_options = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmi_capture = new System.Windows.Forms.ToolStripMenuItem();
+            this.tsmi_captureWeb = new System.Windows.Forms.ToolStripMenuItem();
+            this.json工具ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.tsmi_jtot = new System.Windows.Forms.ToolStripMenuItem();
+            this.tsmi_ttox = new System.Windows.Forms.ToolStripMenuItem();
             this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.tsmi_newPage = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmi_closeCurrent = new System.Windows.Forms.ToolStripMenuItem();
@@ -52,7 +56,6 @@
             this.dockSite7 = new DevComponents.DotNetBar.DockSite();
             this.dockSite3 = new DevComponents.DotNetBar.DockSite();
             this.superTabControl1 = new DevComponents.DotNetBar.SuperTabControl();
-            this.tsmi_captureWeb = new System.Windows.Forms.ToolStripMenuItem();
             this.statusStrip1.SuspendLayout();
             this.menuStrip1.SuspendLayout();
             this.contextMenuStrip1.SuspendLayout();
@@ -105,19 +108,22 @@
             // 工具ToolStripMenuItem
             // 
             this.工具ToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.加载脚本文件ToolStripMenuItem,
+            this.tsmi_loadjs,
             this.tsmi_options,
             this.tsmi_capture,
-            this.tsmi_captureWeb});
+            this.tsmi_captureWeb,
+            this.json工具ToolStripMenuItem,
+            this.tsmi_ttox});
             this.工具ToolStripMenuItem.Name = "工具ToolStripMenuItem";
             this.工具ToolStripMenuItem.Size = new System.Drawing.Size(44, 21);
             this.工具ToolStripMenuItem.Text = "工具";
             // 
-            // 加载脚本文件ToolStripMenuItem
+            // tsmi_loadjs
             // 
-            this.加载脚本文件ToolStripMenuItem.Name = "加载脚本文件ToolStripMenuItem";
-            this.加载脚本文件ToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-            this.加载脚本文件ToolStripMenuItem.Text = "加载脚本文件";
+            this.tsmi_loadjs.Name = "tsmi_loadjs";
+            this.tsmi_loadjs.Size = new System.Drawing.Size(152, 22);
+            this.tsmi_loadjs.Text = "加载脚本文件";
+            this.tsmi_loadjs.Click += new System.EventHandler(this.tsmi_loadjs_Click);
             // 
             // tsmi_options
             // 
@@ -133,6 +139,37 @@
             this.tsmi_capture.Size = new System.Drawing.Size(152, 22);
             this.tsmi_capture.Text = "抓取";
             this.tsmi_capture.Click += new System.EventHandler(this.Tsmi_capture_Click);
+            // 
+            // tsmi_captureWeb
+            // 
+            this.tsmi_captureWeb.Name = "tsmi_captureWeb";
+            this.tsmi_captureWeb.ShortcutKeys = System.Windows.Forms.Keys.F4;
+            this.tsmi_captureWeb.Size = new System.Drawing.Size(152, 22);
+            this.tsmi_captureWeb.Text = "截图";
+            this.tsmi_captureWeb.Click += new System.EventHandler(this.tsmi_captureWeb_Click);
+            // 
+            // json工具ToolStripMenuItem
+            // 
+            this.json工具ToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.tsmi_jtot});
+            this.json工具ToolStripMenuItem.Name = "json工具ToolStripMenuItem";
+            this.json工具ToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.json工具ToolStripMenuItem.Text = "json工具";
+            // 
+            // tsmi_jtot
+            // 
+            this.tsmi_jtot.Name = "tsmi_jtot";
+            this.tsmi_jtot.Size = new System.Drawing.Size(152, 22);
+            this.tsmi_jtot.Text = "json转xls";
+            this.tsmi_jtot.Click += new System.EventHandler(this.tsmi_jtot_Click);
+            // 
+            // tsmi_ttox
+            // 
+            this.tsmi_ttox.Enabled = false;
+            this.tsmi_ttox.Name = "tsmi_ttox";
+            this.tsmi_ttox.Size = new System.Drawing.Size(152, 22);
+            this.tsmi_ttox.Text = "提取表单";
+            this.tsmi_ttox.Click += new System.EventHandler(this.tsmi_ttox_Click);
             // 
             // contextMenuStrip1
             // 
@@ -304,14 +341,6 @@
             this.superTabControl1.TabItemClose += new System.EventHandler<DevComponents.DotNetBar.SuperTabStripTabItemCloseEventArgs>(this.superTabControl1_TabItemClose);
             this.superTabControl1.TabRemoved += new System.EventHandler<DevComponents.DotNetBar.SuperTabStripTabRemovedEventArgs>(this.superTabControl1_TabRemoved);
             // 
-            // tsmi_captureWeb
-            // 
-            this.tsmi_captureWeb.Name = "tsmi_captureWeb";
-            this.tsmi_captureWeb.ShortcutKeys = System.Windows.Forms.Keys.F4;
-            this.tsmi_captureWeb.Size = new System.Drawing.Size(152, 22);
-            this.tsmi_captureWeb.Text = "截图";
-            this.tsmi_captureWeb.Click += new System.EventHandler(this.tsmi_captureWeb_Click);
-            // 
             // WebSpyForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -351,7 +380,7 @@
         private System.Windows.Forms.MenuStrip menuStrip1;
         private System.Windows.Forms.ToolStripMenuItem 文件ToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem 工具ToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem 加载脚本文件ToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem tsmi_loadjs;
         private System.Windows.Forms.ToolStripMenuItem 打印ToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem tsmi_options;
         private System.Windows.Forms.ContextMenuStrip contextMenuStrip1;
@@ -370,6 +399,9 @@
         private DevComponents.DotNetBar.DockSite dockSite8;
         private DevComponents.DotNetBar.SuperTabControl superTabControl1;
         private System.Windows.Forms.ToolStripMenuItem tsmi_captureWeb;
+        private System.Windows.Forms.ToolStripMenuItem json工具ToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem tsmi_jtot;
+        private System.Windows.Forms.ToolStripMenuItem tsmi_ttox;
     }
 }
 

@@ -120,7 +120,7 @@
             this.panel6.Location = new System.Drawing.Point(120, 0);
             this.panel6.Name = "panel6";
             this.panel6.Padding = new System.Windows.Forms.Padding(0, 5, 0, 0);
-            this.panel6.Size = new System.Drawing.Size(497, 32);
+            this.panel6.Size = new System.Drawing.Size(502, 32);
             this.panel6.TabIndex = 3;
             // 
             // urlTextBox
@@ -130,7 +130,7 @@
             this.urlTextBox.Dock = System.Windows.Forms.DockStyle.Fill;
             this.urlTextBox.Location = new System.Drawing.Point(0, 5);
             this.urlTextBox.Name = "urlTextBox";
-            this.urlTextBox.Size = new System.Drawing.Size(497, 21);
+            this.urlTextBox.Size = new System.Drawing.Size(502, 21);
             this.urlTextBox.TabIndex = 0;
             this.urlTextBox.Enter += new System.EventHandler(this.UrlTextBox_Enter);
             this.urlTextBox.KeyDown += new System.Windows.Forms.KeyEventHandler(this.UrlTextBox_KeyDown);
@@ -140,9 +140,9 @@
             this.panel5.Controls.Add(this.label2);
             this.panel5.Controls.Add(this.cookieTextBox);
             this.panel5.Dock = System.Windows.Forms.DockStyle.Right;
-            this.panel5.Location = new System.Drawing.Point(617, 0);
+            this.panel5.Location = new System.Drawing.Point(622, 0);
             this.panel5.Name = "panel5";
-            this.panel5.Size = new System.Drawing.Size(227, 32);
+            this.panel5.Size = new System.Drawing.Size(222, 32);
             this.panel5.TabIndex = 2;
             // 
             // label2

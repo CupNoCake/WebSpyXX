@@ -12,6 +12,8 @@ using Microsoft.Win32;
 using System.Threading;
 using mshtml;
 using DevComponents.DotNetBar;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 
 namespace WebSpyXX
 {
@@ -319,6 +321,65 @@ namespace WebSpyXX
         {
             if (superTabControl1.Tabs.Count > 0)
                 (superTabControl1.SelectedTab.AttachedControl.Controls[0] as WebPage).CaptureWindow();
+        }
+
+        private void tsmi_jtot_Click(object sender, EventArgs e)
+        {
+            OpenFileDialog openFileDialog = new OpenFileDialog();
+
+            openFileDialog.Filter = "JSON files (*.json)|*.json";
+            openFileDialog.FilterIndex = 0;
+            openFileDialog.RestoreDirectory = true;
+            openFileDialog.Title = "打开";
+            if (DialogResult.OK == openFileDialog.ShowDialog())
+            {
+                string json = File.ReadAllText(openFileDialog.FileName);
+                Table table = JsonConvert.DeserializeObject<Table>(json);
+                Excel excel = new Excel();
+                excel.Create();
+                excel.CreateSheetByTable(table);
+            }
+        }
+
+        private void tsmi_loadjs_Click(object sender, EventArgs e)
+        {
+            int index = superTabControl1.SelectedTabIndex;
+            if (index >= 0 && index < superTabControl1.Tabs.Count)
+            {
+                OpenFileDialog openFileDialog = new OpenFileDialog();
+
+                openFileDialog.Filter = "JavaScript files (*.js)|*.js";
+                openFileDialog.FilterIndex = 0;
+                openFileDialog.RestoreDirectory = true;
+                openFileDialog.Title = "打开";
+                if (DialogResult.OK == openFileDialog.ShowDialog())
+                {
+                    string js = File.ReadAllText(openFileDialog.FileName);
+
+                    ((superTabControl1.Tabs[index] as SuperTabItem).AttachedControl.Controls[0] as WebPage).LoadScript(js);
+                    tsmi_ttox.Enabled = true;
+                }
+                
+            }
+        }
+
+        private void tsmi_ttox_Click(object sender, EventArgs e)
+        {
+            int index = superTabControl1.SelectedTabIndex;
+            if (index >= 0 && index < superTabControl1.Tabs.Count)
+            {
+                string json = ((superTabControl1.Tabs[index] as SuperTabItem).AttachedControl.Controls[0] as WebPage).ExcuteScript("yzf_get_table").ToString();
+
+                if(json != null)
+                {
+                    Table table = JsonConvert.DeserializeObject<Table>(json);
+
+                    Excel excel = new Excel();
+                    excel.Create();
+                    excel.CreateSheetByTable(table);
+                }
+            }
+               
         }
     }
 }
