@@ -38,6 +38,7 @@
             this.panel6 = new System.Windows.Forms.Panel();
             this.urlTextBox = new System.Windows.Forms.TextBox();
             this.panel5 = new System.Windows.Forms.Panel();
+            this.btn_go = new System.Windows.Forms.Button();
             this.label2 = new System.Windows.Forms.Label();
             this.cookieTextBox = new System.Windows.Forms.TextBox();
             this.panel4 = new System.Windows.Forms.Panel();
@@ -120,7 +121,7 @@
             this.panel6.Location = new System.Drawing.Point(120, 0);
             this.panel6.Name = "panel6";
             this.panel6.Padding = new System.Windows.Forms.Padding(0, 5, 0, 0);
-            this.panel6.Size = new System.Drawing.Size(502, 32);
+            this.panel6.Size = new System.Drawing.Size(467, 32);
             this.panel6.TabIndex = 3;
             // 
             // urlTextBox
@@ -130,25 +131,37 @@
             this.urlTextBox.Dock = System.Windows.Forms.DockStyle.Fill;
             this.urlTextBox.Location = new System.Drawing.Point(0, 5);
             this.urlTextBox.Name = "urlTextBox";
-            this.urlTextBox.Size = new System.Drawing.Size(502, 21);
+            this.urlTextBox.Size = new System.Drawing.Size(467, 21);
             this.urlTextBox.TabIndex = 0;
             this.urlTextBox.Enter += new System.EventHandler(this.UrlTextBox_Enter);
             this.urlTextBox.KeyDown += new System.Windows.Forms.KeyEventHandler(this.UrlTextBox_KeyDown);
             // 
             // panel5
             // 
+            this.panel5.Controls.Add(this.btn_go);
             this.panel5.Controls.Add(this.label2);
             this.panel5.Controls.Add(this.cookieTextBox);
             this.panel5.Dock = System.Windows.Forms.DockStyle.Right;
-            this.panel5.Location = new System.Drawing.Point(622, 0);
+            this.panel5.Location = new System.Drawing.Point(587, 0);
             this.panel5.Name = "panel5";
-            this.panel5.Size = new System.Drawing.Size(222, 32);
+            this.panel5.Size = new System.Drawing.Size(257, 32);
             this.panel5.TabIndex = 2;
+            // 
+            // btn_go
+            // 
+            this.btn_go.Location = new System.Drawing.Point(6, 3);
+            this.btn_go.Name = "btn_go";
+            this.btn_go.Size = new System.Drawing.Size(43, 23);
+            this.btn_go.TabIndex = 2;
+            this.btn_go.Text = "转到";
+            this.btn_go.UseVisualStyleBackColor = true;
+            this.btn_go.Click += new System.EventHandler(this.btn_go_Click);
             // 
             // label2
             // 
+            this.label2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(6, 14);
+            this.label2.Location = new System.Drawing.Point(55, 8);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(41, 12);
             this.label2.TabIndex = 1;
@@ -156,7 +169,8 @@
             // 
             // cookieTextBox
             // 
-            this.cookieTextBox.Location = new System.Drawing.Point(53, 5);
+            this.cookieTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.cookieTextBox.Location = new System.Drawing.Point(102, 3);
             this.cookieTextBox.Name = "cookieTextBox";
             this.cookieTextBox.Size = new System.Drawing.Size(150, 21);
             this.cookieTextBox.TabIndex = 0;
@@ -278,5 +292,6 @@
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.TextBox cookieTextBox;
         private System.Windows.Forms.Timer timer1;
+        private System.Windows.Forms.Button btn_go;
     }
 }

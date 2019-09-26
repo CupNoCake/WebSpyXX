@@ -477,6 +477,14 @@ namespace WebSpyXX
                     text += data.Text;
 
                 object value;
+                object type;
+
+                if(data.Attr.TryGetValue("type", out type))
+                {
+                    if (type.ToString() == "hidden")
+                        continue;
+                }
+
                 if (showAttr.Length > 0 && data.Attr.TryGetValue(showAttr, out value))
                 {
                     attr += "[" + data.Id + "]";

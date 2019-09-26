@@ -348,7 +348,7 @@ namespace ExtandedUserControl
                 if (TargetFrameName != null)
                     tFrame = TargetFrameName.ToString();
 
-                BrowserExtendedNavigatingEventArgs args = new BrowserExtendedNavigatingEventArgs(pDisp, urlUri, tFrame, UrlContext.None);
+                BrowserExtendedNavigatingEventArgs args = new BrowserExtendedNavigatingEventArgs(pDisp, urlUri, null, tFrame, UrlContext.None);
                 _Browser.OnStartNavigate(args);
 
                 Cancel = args.Cancel;
@@ -357,7 +357,7 @@ namespace ExtandedUserControl
 
             public void NewWindow2(ref object ppDisp, ref bool Cancel)
             {
-                BrowserExtendedNavigatingEventArgs args = new BrowserExtendedNavigatingEventArgs(ppDisp, null, null, UrlContext.None);
+                BrowserExtendedNavigatingEventArgs args = new BrowserExtendedNavigatingEventArgs(ppDisp, null, null, null, UrlContext.None);
                 _Browser.OnStartNewWindow(args);
                 Cancel = args.Cancel;
                 ppDisp = args.AutomationObject;
@@ -481,7 +481,7 @@ namespace ExtandedUserControl
 
             public void NewWindow3(ref object ppDisp, ref bool Cancel, uint dwFlags, string bstrUrlContext, string bstrUrl)
             {
-                BrowserExtendedNavigatingEventArgs args = new BrowserExtendedNavigatingEventArgs(ppDisp, new Uri(bstrUrl), null, (UrlContext)dwFlags);
+                BrowserExtendedNavigatingEventArgs args = new BrowserExtendedNavigatingEventArgs(ppDisp, new Uri(bstrUrl), bstrUrlContext, null, (UrlContext)dwFlags);
                 _Browser.OnStartNewWindow(args);
                 Cancel = args.Cancel;
                 ppDisp = args.AutomationObject;

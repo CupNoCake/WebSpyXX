@@ -1,11 +1,13 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.29102.190
+# Visual Studio 14
+VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebSpyXX", "WebSpyXX\WebSpyXX.csproj", "{95010D49-538D-4B95-B74F-389ACCEDF598}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExtandedWebBrowser", "ExtandWebBrowser\ExtandedWebBrowser.csproj", "{ED5A8290-5F22-4075-B429-7C5AD0A0E2B5}"
+EndProject
+Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "Setup", "Setup\Setup.vdproj", "{3FB60A4A-4948-462A-BF07-8460F24B5C80}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -22,6 +24,8 @@ Global
 		{ED5A8290-5F22-4075-B429-7C5AD0A0E2B5}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{ED5A8290-5F22-4075-B429-7C5AD0A0E2B5}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{ED5A8290-5F22-4075-B429-7C5AD0A0E2B5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3FB60A4A-4948-462A-BF07-8460F24B5C80}.Debug|Any CPU.ActiveCfg = Debug
+		{3FB60A4A-4948-462A-BF07-8460F24B5C80}.Release|Any CPU.ActiveCfg = Release
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

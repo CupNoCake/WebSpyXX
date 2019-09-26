@@ -42,6 +42,8 @@
             this.json工具ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmi_jtot = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmi_ttox = new System.Windows.Forms.ToolStripMenuItem();
+            this.tsmi_getCookie = new System.Windows.Forms.ToolStripMenuItem();
+            this.tsmi_setCookie = new System.Windows.Forms.ToolStripMenuItem();
             this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.tsmi_newPage = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmi_closeCurrent = new System.Windows.Forms.ToolStripMenuItem();
@@ -113,7 +115,9 @@
             this.tsmi_capture,
             this.tsmi_captureWeb,
             this.json工具ToolStripMenuItem,
-            this.tsmi_ttox});
+            this.tsmi_ttox,
+            this.tsmi_getCookie,
+            this.tsmi_setCookie});
             this.工具ToolStripMenuItem.Name = "工具ToolStripMenuItem";
             this.工具ToolStripMenuItem.Size = new System.Drawing.Size(44, 21);
             this.工具ToolStripMenuItem.Text = "工具";
@@ -121,14 +125,14 @@
             // tsmi_loadjs
             // 
             this.tsmi_loadjs.Name = "tsmi_loadjs";
-            this.tsmi_loadjs.Size = new System.Drawing.Size(152, 22);
+            this.tsmi_loadjs.Size = new System.Drawing.Size(160, 22);
             this.tsmi_loadjs.Text = "加载脚本文件";
             this.tsmi_loadjs.Click += new System.EventHandler(this.tsmi_loadjs_Click);
             // 
             // tsmi_options
             // 
             this.tsmi_options.Name = "tsmi_options";
-            this.tsmi_options.Size = new System.Drawing.Size(152, 22);
+            this.tsmi_options.Size = new System.Drawing.Size(160, 22);
             this.tsmi_options.Text = "配置";
             this.tsmi_options.Click += new System.EventHandler(this.tsmi_options_Click);
             // 
@@ -136,7 +140,7 @@
             // 
             this.tsmi_capture.Name = "tsmi_capture";
             this.tsmi_capture.ShortcutKeys = System.Windows.Forms.Keys.F2;
-            this.tsmi_capture.Size = new System.Drawing.Size(152, 22);
+            this.tsmi_capture.Size = new System.Drawing.Size(160, 22);
             this.tsmi_capture.Text = "抓取";
             this.tsmi_capture.Click += new System.EventHandler(this.Tsmi_capture_Click);
             // 
@@ -144,7 +148,7 @@
             // 
             this.tsmi_captureWeb.Name = "tsmi_captureWeb";
             this.tsmi_captureWeb.ShortcutKeys = System.Windows.Forms.Keys.F4;
-            this.tsmi_captureWeb.Size = new System.Drawing.Size(152, 22);
+            this.tsmi_captureWeb.Size = new System.Drawing.Size(160, 22);
             this.tsmi_captureWeb.Text = "截图";
             this.tsmi_captureWeb.Click += new System.EventHandler(this.tsmi_captureWeb_Click);
             // 
@@ -153,13 +157,13 @@
             this.json工具ToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.tsmi_jtot});
             this.json工具ToolStripMenuItem.Name = "json工具ToolStripMenuItem";
-            this.json工具ToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.json工具ToolStripMenuItem.Size = new System.Drawing.Size(160, 22);
             this.json工具ToolStripMenuItem.Text = "json工具";
             // 
             // tsmi_jtot
             // 
             this.tsmi_jtot.Name = "tsmi_jtot";
-            this.tsmi_jtot.Size = new System.Drawing.Size(152, 22);
+            this.tsmi_jtot.Size = new System.Drawing.Size(127, 22);
             this.tsmi_jtot.Text = "json转xls";
             this.tsmi_jtot.Click += new System.EventHandler(this.tsmi_jtot_Click);
             // 
@@ -167,9 +171,25 @@
             // 
             this.tsmi_ttox.Enabled = false;
             this.tsmi_ttox.Name = "tsmi_ttox";
-            this.tsmi_ttox.Size = new System.Drawing.Size(152, 22);
+            this.tsmi_ttox.Size = new System.Drawing.Size(160, 22);
             this.tsmi_ttox.Text = "提取表单";
             this.tsmi_ttox.Click += new System.EventHandler(this.tsmi_ttox_Click);
+            // 
+            // tsmi_getCookie
+            // 
+            this.tsmi_getCookie.Name = "tsmi_getCookie";
+            this.tsmi_getCookie.ShortcutKeys = System.Windows.Forms.Keys.F8;
+            this.tsmi_getCookie.Size = new System.Drawing.Size(160, 22);
+            this.tsmi_getCookie.Text = "获取cookie";
+            this.tsmi_getCookie.Click += new System.EventHandler(this.tsmi_getCookie_Click);
+            // 
+            // tsmi_setCookie
+            // 
+            this.tsmi_setCookie.Name = "tsmi_setCookie";
+            this.tsmi_setCookie.ShortcutKeys = System.Windows.Forms.Keys.F9;
+            this.tsmi_setCookie.Size = new System.Drawing.Size(160, 22);
+            this.tsmi_setCookie.Text = "设置cookie";
+            this.tsmi_setCookie.Click += new System.EventHandler(this.tsmi_setCookie_Click);
             // 
             // contextMenuStrip1
             // 
@@ -402,6 +422,8 @@
         private System.Windows.Forms.ToolStripMenuItem json工具ToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem tsmi_jtot;
         private System.Windows.Forms.ToolStripMenuItem tsmi_ttox;
+        private System.Windows.Forms.ToolStripMenuItem tsmi_getCookie;
+        private System.Windows.Forms.ToolStripMenuItem tsmi_setCookie;
     }
 }
 

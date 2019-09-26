@@ -22,6 +22,13 @@ namespace ExtandedUserControl
             get { return _Url; }
         }
 
+        public string _urlContext;
+
+        public string UrlContext
+        {
+            get { return _urlContext; }
+        }
+
         private string _Frame;
         /// <summary>
         /// The name of the frame to navigate to
@@ -58,10 +65,11 @@ namespace ExtandedUserControl
         /// <param name="url">The URL to go to</param>
         /// <param name="frame">The name of the frame</param>
         /// <param name="navigationContext">The new window flags</param>
-        public BrowserExtendedNavigatingEventArgs(object automation, Uri url, string frame, UrlContext navigationContext)
+        public BrowserExtendedNavigatingEventArgs(object automation, Uri url, string urlContext, string frame, UrlContext navigationContext)
           : base()
         {
             _Url = url;
+            _urlContext = urlContext;
             _Frame = frame;
             this.navigationContext = navigationContext;
             this._pDisp = automation;

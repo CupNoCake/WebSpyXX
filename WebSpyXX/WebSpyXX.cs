@@ -352,6 +352,7 @@ namespace WebSpyXX
                 openFileDialog.FilterIndex = 0;
                 openFileDialog.RestoreDirectory = true;
                 openFileDialog.Title = "打开";
+                openFileDialog.InitialDirectory = System.IO.Directory.GetCurrentDirectory();
                 if (DialogResult.OK == openFileDialog.ShowDialog())
                 {
                     string js = File.ReadAllText(openFileDialog.FileName);
@@ -372,6 +373,7 @@ namespace WebSpyXX
 
                 if(json != null)
                 {
+                    File.WriteAllText(System.IO.Directory.GetCurrentDirectory() + "/table.json", json);
                     Table table = JsonConvert.DeserializeObject<Table>(json);
 
                     Excel excel = new Excel();
@@ -380,6 +382,29 @@ namespace WebSpyXX
                 }
             }
                
+        }
+
+        private void tsmi_getCookie_Click(object sender, EventArgs e)
+        {
+            int index = superTabControl1.SelectedTabIndex;
+            if (index >= 0 && index < superTabControl1.Tabs.Count)
+            {
+                string cookie = ((superTabControl1.Tabs[index] as SuperTabItem).AttachedControl.Controls[0] as WebPage).GetCookie();
+
+                if(cookie.Length > 0)
+                {
+                    Clipboard.SetText(cookie);
+                    MessageBox.Show("cookie已复制到剪切板");
+                }
+                
+            }
+        }
+
+        private void tsmi_setCookie_Click(object sender, EventArgs e)
+        {
+            CookieDlg dlg = new CookieDlg();
+
+            dlg.ShowDialog(this);
         }
     }
 }
