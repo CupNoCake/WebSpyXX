@@ -456,7 +456,7 @@ namespace ExtandedUserControl
 
             public void NavigateError(object pDisp, ref object URL, ref object Frame, ref object StatusCode, ref bool Cancel)
             {
-                //throw new NotImplementedException();
+                throw new NotImplementedException();
             }
 
             public void PrintTemplateInstantiation(object pDisp)

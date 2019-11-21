@@ -406,5 +406,14 @@ namespace WebSpyXX
 
             dlg.ShowDialog(this);
         }
+
+        private void tsmi_execjs_Click(object sender, EventArgs e)
+        {
+            int index = superTabControl1.SelectedTabIndex;
+            if (index >= 0 && index < superTabControl1.Tabs.Count)
+            {
+                ((superTabControl1.Tabs[index] as SuperTabItem).AttachedControl.Controls[0] as WebPage).ShowTools();
+            }
+        }
     }
 }

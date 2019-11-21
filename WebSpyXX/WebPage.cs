@@ -105,6 +105,11 @@ namespace WebSpyXX
             return "";
         }
 
+        public void ShowTools()
+        {
+            panel_tools.Visible = !panel_tools.Visible;
+        }
+
         private void LoadScript(HtmlDocument document, string scriptText)
         {
             //找到head元素
@@ -144,6 +149,19 @@ namespace WebSpyXX
         private object ExcuteScript(HtmlDocument document, string script, object[] args)
         {
             return document.InvokeScript(script, args);
+        }
+
+        private object ExcuteScriptString(HtmlDocument document, string script)
+        {
+            var doc = document.DomDocument as IHTMLDocument2;
+            var win = doc.parentWindow as IHTMLWindow2;
+            string jscode = script;  //这里写JS代码
+            return win.execScript(jscode, "javascript");
+        }
+
+        private object ExcuteScriptString(string script)
+        {
+            return ExcuteScriptString(extandedWebBrowser1.Document, script);
         }
 
         public void SetCapture()
@@ -410,6 +428,28 @@ namespace WebSpyXX
         private void btn_go_Click(object sender, EventArgs e)
         {
             GoPage();
+        }
+
+        private void tb_js_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter && !e.Shift)
+            {
+                string js = tb_js.Text.Trim();
+                tb_js.Text = "";
+                if (js.Length > 0)
+                {
+                    tb_result.Text = js;
+
+                    object obj = ExcuteScriptString(js);
+
+                    if (obj != null)
+                    {
+                        tb_result.Text = obj.ToString();
+                    }
+                }
+
+                e.Handled = true;
+            }
         }
     }
 }
